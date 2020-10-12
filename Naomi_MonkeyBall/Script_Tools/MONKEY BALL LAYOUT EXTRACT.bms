@@ -1,0 +1,51 @@
+#----------------------------------------------------------------------
+# MONKEY BALL | Layout files Extractor Ver 1.0  
+#
+# *Script by Vincent
+#
+#
+# Credits: DKDave, Yoshimaster96, Eucalyptus for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+
+Math TRIM = 0                    # ON by Default: How many bytes to trim from each extracted file
+
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+
+Math A = 1
+
+For A
+
+    If NEXTVALUE = 0                  # If OFFSET 2 is the same as Last offset
+        
+		break
+		
+    Else
+        
+
+		Get OFFSET long
+	    Get SIZE long		
+		String FILENAME P "Layout_%A%.def" 	
+        Log FILENAME OFFSET SIZE
+		SavePos CURRENT
+		Xmath NEXT "CURRENT+8"
+		get NEXTVALUE long
+		goto CURRENT
+		
+		
+		
+    Endif
+
+
+Next A

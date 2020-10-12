@@ -1,0 +1,89 @@
+#----------------------------------------------------------------------
+# MONKEY BALL | ARCADE Models & Motion files Extractor Ver 1.0  
+#
+# *Script by Vincent
+#
+#
+# Credits: DKDave, Yoshimaster96, Eucalyptus for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+
+Math TRIM = 16                    # ON by Default: How many bytes to trim from each extracted file
+
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+FindLoc POINTERZEROS String "\x00\x00\x00\x00"
+
+Xmath LASTPOINTER "POINTERZEROS-0x4"
+
+Math FIRSTPOINTER = "0x04"        # 1) First Pointer in the list ( Just the Offset of pointer!)
+
+Goto 0x0
+get VAR1 long
+goto 0x0
+get VAR2 short
+Xmath VAR "VAR1 - VAR2"			
+
+Get END_FILE asize
+Goto 
+Goto LASTPOINTER                        
+Get OFFSET3 long
+Goto FIRSTPOINTER  
+Get OFFSET1 long
+
+Math A = 1
+
+For A
+
+    If OFFSET1 = OFFSET3                  # If OFFSET 2 is the same as Last offset
+
+		XMath TARGET "OFFSET3 - VAR"      # Game offset variable difference - or +
+		XMath SIZE "END_FILE - TARGET"
+		Xmath NAMEPOINT "TARGET - 0x08"
+		Goto NAMEPOINT
+		Get NAMEOFF long
+		Xmath REALNAMEOFF "NAMEOFF - VAR"
+	    Xmath NMSIZE "END_FILE-REALNAMEOFF"
+		Goto REALNAMEOFF
+		GetDString NAME NMSIZE
+		Xmath END "SIZE - TRIM"     
+		String FILENAME P "%NAME%.bin" 	
+        Log FILENAME TARGET END
+        Break
+    Else
+        
+	    Get OFFSET2 long		
+		SavePos CURRENT_OFFSET
+		Xmath NEXTPOINTER "(OFFSET2-VAR) - 0x8"
+        Goto NEXTPOINTER
+		Get NMPOINT2 long
+		Xmath REALNAMEOFF2 "NMPOINT2-VAR"		
+        XMath SIZE "OFFSET2 - OFFSET1"
+		Xmath TARGET "OFFSET1 - VAR"      # Game offset variable difference - or +
+		Xmath NAMEPOINT "TARGET - 0x08"
+		Goto NAMEPOINT
+		Get NAMEOFF long
+		Xmath REALNAMEOFF "NAMEOFF - VAR"
+		Xmath NMSIZE "REALNAMEOFF2-REALNAMEOFF"
+		Goto REALNAMEOFF
+		GetDString NAME NMSIZE
+		Xmath END "SIZE - TRIM"  
+        Math OFFSET1 = OFFSET2
+		goto CURRENT_OFFSET
+		String FILENAME P "%NAME%.bin" 	
+        Log FILENAME TARGET END
+		
+    Endif
+
+
+Next A

@@ -1,0 +1,93 @@
+#----------------------------------------------------------------------
+# MONKEY BALL | ARCADE Textures Extractor Ver 1.0  
+#
+# *Script by Vincent
+#
+#
+# Credits: DKDave, Yoshimaster96, Eucalyptus for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+
+Goto 0x0
+get VAR1 long
+goto 0x0
+get VAR2 short
+Xmath VAR "VAR1 - VAR2"
+								  
+Math FIRSTPOINTER = "0x10"        
+
+goto 0x4
+get NMP long 
+Xmath LASTPOINTER "NMP-VAR-0x18"
+Xmath NAMEPOINT "LASTPOINTER+0x18" 
+
+XMath TEXPIX "0x0C"  
+XMath TEXLEN "0x08" 
+
+
+Get END_FILE asize
+
+Goto LASTPOINTER                       
+Get OFFSET3 long     
+Goto FIRSTPOINTER       
+Get OFFSET1 long
+set MEMORY_FILE binary "\x50\x56\x52\x54\x08\x00\x00\x00"
+get SIZE asize -1
+Xmath NAMEPOINT "NAMEPOINT - 4"
+
+
+Math A = 1
+
+For A
+
+    If OFFSET1 = OFFSET3                  # If OFFSET 2 is the same as Last offset
+
+		XMath TARGET "OFFSET3 - VAR"      # Game offset variable difference - or +
+		XMath FSIZE "END_FILE - TARGET"
+		Math NAMEPOINT += 4
+		goto NAMEPOINT
+		Get NPOFFSET long
+		Xmath NPREAL "NPOFFSET - VAR"
+		Goto NPREAL
+		GetDString NAME 0xC
+		String FILENAME P "%NAME%.pvr" 	
+		append
+		Log FILENAME 0 SIZE -1
+		Log FILENAME TEXPIX 4 
+        Log FILENAME TEXLEN 4
+        Log FILENAME TARGET FSIZE
+		break
+    Else
+	   
+        XMath OFFSET2 = "OFFSET1"
+		Get JUNK long
+        Get JUNK long
+		Get JUNK long
+	    Get OFFSET2 long
+		SavePos CURRENT_OFFSET
+        XMath SIZE0 "OFFSET2 - OFFSET1"
+		Xmath TARGET "OFFSET1 - VAR"      # Game offset variable difference - or +
+		Math NAMEPOINT += 4
+		goto NAMEPOINT
+		Get NPOFFSET long
+		Xmath NPREAL "NPOFFSET - VAR"
+		Goto NPREAL
+		GetDString NAME 0x10               
+        String FILENAME P "%NAME%.pvr" 	
+		append
+		Log FILENAME 0 SIZE -1
+		Log FILENAME TEXPIX 4 
+        Log FILENAME TEXLEN 4
+        Log FILENAME TARGET SIZE0
+		append
+		Math OFFSET1 = OFFSET2
+		goto CURRENT_OFFSET	
+		Xmath TEXPIX "TEXPIX+16"
+		Xmath TEXLEN "TEXLEN+16"  
+
+
+    Endif
+
+
+Next A
