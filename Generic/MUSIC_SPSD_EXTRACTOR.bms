@@ -1,0 +1,48 @@
+#----------------------------------------------------------------------
+# SPDS Generic files Extractor Ver 1.0  
+#
+# *Script by Vincent
+# 
+#----------------------------------------------------------------------
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+
+Math PADDING = 0x0                     # ON by Default: How many bytes to trim from each extracted file
+
+goto 0x0                               # Start looking for a different offset, if the FIRST extracted SPSD is a large file and has garbled music
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+
+Math A = 1
+
+For A
+
+String FILENAME P "STREAM_%A%.spsd"
+
+
+
+	If  CURRENT_OFFSET = ""
+	    Break
+		
+    Else
+	    FindLoc SP_OFFSET String "SPSD"
+		goto SP_OFFSET
+		get JUNK long
+		get JUNK long
+		get JUNK long
+		get SIZE long
+		Xmath TARGET "SIZE + PADDING"
+	    Log FILENAME SP_OFFSET TARGET
+		
+    Endif
+
+
+Next A
