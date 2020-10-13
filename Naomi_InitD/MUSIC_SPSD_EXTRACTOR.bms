@@ -13,8 +13,20 @@
 
 Math PADDING = 0x0                     # ON by Default: How many bytes to trim from each extracted file
 
-goto 0x2C9207                          # Start looking for a different offset, if the FIRST extracted SPSD is a large file and has garbled music
+goto 0x0                               # Start looking for a different offset, if the FIRST extracted SPSD is a large file and has garbled music
 
+# I Already found the offsets of some versions I had at hand, so all you need to do is change the "goto 0x0" with the 0x### value of the game you have.
+# Other revisions will work, but you will need to find the offset yourself.
+
+# GDS-0020B (D1 Jap Rev B) offset 0x1CF107
+# GDS-0025 (D1 EXP) offset 0x1DBE7B
+# GDS-0025A (D1 EXP REV A) offset 0x1DBE9A 
+# GDS-0026 (D2 Jap) offset 0x25DEE7
+# GDS-0026B (D2 Jap Rev B) offset 0x275B90 
+# GDS-0027 (D2 EXP) offset 0x278867 
+# GDS-0032B (D3 Jap Rev B) offset 0x2C9207 
+# GDS-0033 (D3 EXP) offset 0x2C9227
+# GDS-0039B (D3 EXP Crystal Edition Rev B) offset 0x2D2EBF
 
 #-----------------------------------
 # DO NOT CHANGE ANYTHING BELOW HERE!
