@@ -3,7 +3,7 @@
 **Important**:
 
 Naomi Model Extractor will scan any game binary files for NaomiLib models and extract them.
-To use it, obtain your legally own game .GDI file and open it with GD-ROM Explorer, inside you will find multiple files thatmay contain game models.
+To use it, obtain your legally own game .GDI file and open it with GD-ROM Explorer, inside you will find multiple files that may contain game models.
 
 If you are unsure which file contain models, you can extract them all to any temporary folder and start scanning!
 
