@@ -2,12 +2,15 @@
 
 [Naomi Model Extractor](https://raw.githubusercontent.com/NaomiMod/games-ExtractTools/main/NAOMI%20MODEL%20EXTRACTOR.bms) is a QuickBMS script that will scan game files for NaomiLib models and extract them.
 
+Exported models can be opened in Blender with 
+[Blender Naomilib Importer Addon](https://github.com/NaomiMod/blender-NaomiLib) 
+
 # How to use
 
-1) Obtain your legally own game .GDI file and open it with GD-ROM Explorer, inside you will find multiple files that may contain game models.
+1) Obtain your legally own game .GDI file and open it with [GD-ROM Explorer](https://japanese-cake.livejournal.com/5889.html), inside you will find multiple files that may contain game models.
 If you are unsure which file contain models, you can extract them all to any temporary folder.
 
-2) Get QuickBMS and open the script. Once done you'll be asked which file to scan and where to extract files.
+2) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run it. Open the script and you'll be asked which file to scan and where to extract files.
 
 # FAQ:
 
