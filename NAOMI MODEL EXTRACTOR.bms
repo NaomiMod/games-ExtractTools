@@ -1,0 +1,153 @@
+#----------------------------------------------------------------------
+# NaomiLib | Models Extractor Ver 1.0  
+#
+# *Script by Vincent
+#
+#
+# Credits: DKDave & Chrrox for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+
+
+FindLoc FILE_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 ""
+If FILE_START == ""
+break
+endif
+get FILE_END asize
+Xmath FILE_END "FILE_END-0x8"    # Last Mesh in a model archive is always at -0x8 from file end
+goto 0x0
+
+Math A = 1   #Filename number
+String NAME P "MODEL_%A%.bin"
+
+
+#--------------------------------
+#          MAIN LOOP1
+#--------------------------------
+
+For LOOP1
+
+FindLoc MODEL_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 ""
+
+
+If MODEL_START == ""  
+
+     break                           
+ 
+Else
+
+     #------------------------ 
+     # CHECK IF NAOMILIB MODEL
+     #------------------------
+	 
+     XMath MODEL_CHECK "MODEL_START + 0x68"
+     goto MODEL_CHECK
+     get CHECK_VALUE long
+	     
+		 
+		
+		 
+		If CHECK_VALUE > 0x0A && CHECK_VALUE <= 0xFF   # If value is in range
+         
+         #--------------------
+         # YES! NAOMI LIB MODEL
+         #--------------------
+       
+		 Math CHECK = 1 
+		 
+		
+		 Xmath MESH_END_POINTER "MODEL_START+0x64"
+		
+		 goto MESH_END_POINTER
+		 get MESH_SIZE long
+		 Xmath MESH_END "MESH_SIZE+MESH_END_POINTER+0x4"
+		
+		 
+		       if MESH_END < FILE_END && MESH_END > 0 && MESH_SIZE >= 0      # Mesh is within file offset, valid model      
+				 goto MESH_END
+			     get NEXT_HEADER long
+				
+				 goto MESH_END
+		        Else                       # Mesh is out of bounds, not a valid model
+		         goto MODEL_START       
+                 get JUNK longlong
+		         break
+				 
+			    Endif
+			 
+	    Else 
+		 
+		    #--------------------------
+		    # NO! NOT A NAOMILIB MODEL
+		    #--------------------------
+		 
+		  
+		     Math CHECK = 2 
+		     goto MODEL_START
+             get JUNK longlong
+			 
+	
+		Endif
+	
+        
+		For LOOP2
+		
+	  If CHECK = 1
+         #--------------------------------
+         #         NEW MESH: LOOP2
+         #--------------------------------
+		
+	
+		
+         #--------------------
+         # NEW MESH
+         #--------------------	
+		
+	
+		if NEXT_HEADER != 0
+		     Xmath MESH_END_POINTER "MESH_END+0x48+0x4"
+			
+			 goto MESH_END_POINTER
+			 get MESH_SIZE long
+			 Xmath MESH_END "MESH_SIZE+MESH_END_POINTER+0x4"
+		
+			 
+
+			if MESH_END <= FILE_END && MESH_END > 0 && MESH_SIZE >= 0        # Mesh is within file offset, valid model      
+			     goto MESH_END
+			     get NEXT_HEADER long
+				
+				 
+		    Else                       # Mesh is out of bounds, not a valid model
+			
+		         goto MODEL_START       
+                 get JUNK longlong
+		         break
+			Endif
+			 
+			 
+			 
+	    Else
+		     Xmath MESH_END "MESH_END+8"     # Add endstring 8 bytes
+			 Xmath MODEL_SIZE "MESH_END-MODEL_START"
+			 String NAME P "MODEL_%A%.bin"
+			
+			 
+		     log NAME MODEL_START MODEL_SIZE     # Log the model with detected meshes so far
+			 XMath A "A+1"
+			 goto MODEL_START
+			 get JUNK longlong
+			 break
+	    Endif
+			Next LOOP2 
+	  Endif
+			 
+Endif
+
+Next LOOP1
+
+
+
+
+
