@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------
-# NaomiLib | Models Extractor Ver 1.0  
+# NaomiLib | Models Extractor Ver 1.1  
 #
 # *Script by Vincent
 #
@@ -8,32 +8,87 @@
 # 
 #----------------------------------------------------------------------
 
+Math MVAR = 0
+Math A = 1 #Filename number
 
+FOR START
 
-FindLoc FILE_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 ""
-If FILE_START == ""
-break
+if MVAR = 0
+      FindLoc FILE_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 "" 
+      If FILE_START == ""
+          Math MVAR = 1
+		  print "MAGIC TYPE A NOT FOUND!"
+      endif
+
 endif
-get FILE_END asize
-Xmath FILE_END "FILE_END-0x8"    # Last Mesh in a model archive is always at -0x8 from file end
-goto 0x0
+	  
+if MVAR = 1
+      FindLoc FILE_START String "\x01\x00\x00\x00\x03\x00\x00\x00" 0 "" 
+      If FILE_START == ""
+          Math MVAR = 2
+		  print "MAGIC TYPE B NOT FOUND!"
+      endif
 
-Math A = 1   #Filename number
-String NAME P "MODEL_%A%.bin"
+	  
+endif
+
+if MVAR = 2
+      FindLoc FILE_START String "\x01\x00\x00\x00\x05\x00\x00\x00" 0 "" 
+      If FILE_START == ""
+          Math MVAR = 3
+		  print "MAGIC TYPE C NOT FOUND!"
+      endif
+	  	  
+endif
+
+if MVAR = 3
+		  print "MODELS NOT FOUND!"
+
+	  break
+	  	  
+endif
 
 
+    get FILE_END asize
+    Xmath FILE_END "FILE_END-0x8"    # Last Mesh in a model archive is always at -0x8 from file end
+    goto 0x0
+
+	
 #--------------------------------
 #          MAIN LOOP1
 #--------------------------------
 
 For LOOP1
 
+if MVAR = 0
 FindLoc MODEL_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 ""
+endif
+
+if MVAR = 1
+FindLoc MODEL_START String "\x01\x00\x00\x00\x03\x00\x00\x00" 0 ""
+endif
+
+if MVAR = 2
+FindLoc MODEL_START String "\x01\x00\x00\x00\x05\x00\x00\x00" 0 ""
+endif
+
+if MVAR = 3
+break
+endif
 
 
-If MODEL_START == ""  
+#-------------------------------------
+#   MAGIC A TYPE
+#-------------------------------------
 
-     break                           
+If MODEL_START == "" && MVAR = 3
+break
+endif
+
+If MODEL_START == "" && MVAR != 3
+
+     goto 0x0
+     Xmath MVAR "MVAR + 1" 
  
 Else
 
@@ -48,7 +103,7 @@ Else
 		 
 		
 		 
-		If CHECK_VALUE > 0x0A && CHECK_VALUE <= 0xFF   # If value is in range
+		If CHECK_VALUE > 0x0A && CHECK_VALUE <= 0x01FF   # If value is in range
          
          #--------------------
          # YES! NAOMI LIB MODEL
@@ -131,8 +186,16 @@ Else
 	    Else
 		     Xmath MESH_END "MESH_END+8"     # Add endstring 8 bytes
 			 Xmath MODEL_SIZE "MESH_END-MODEL_START"
-			 String NAME P "MODEL_%A%.bin"
-			
+             
+			 if MVAR = 0
+             String NAME P "MODEL_A_%A%.bin"
+			 endif
+			 if MVAR = 1
+             String NAME P "MODEL_B_%A%.bin"
+			 endif
+			 if MVAR = 2
+             String NAME P "MODEL_C_%A%.bin"
+			 endif
 			 
 		     log NAME MODEL_START MODEL_SIZE     # Log the model with detected meshes so far
 			 XMath A "A+1"
