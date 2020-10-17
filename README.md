@@ -14,25 +14,26 @@ If you are unsure which file contain models, you can extract them all to any tem
 
 # FAQ:
 
-1) Where are textures?
+- Where are textures?
 
-Textures are usually stored in separate archives without any header.
-For this reason you can find specific Game-specific scripts to extract textures and other resources from your game.
+Textures are usually stored in separate archives without any header, so you have 2 options to obtain them:
+1) Dump textures with by using Retroarch Flycast core (please note some textures are vertically flipped, which is correct!)
+2) Look for game-specific scripts in this section
+
+-  No models found!
+
+1) When searching for models in a Dreamcast game, be sure to extract all files from GD-ROM explorer first!
+2) Files containing models are often referred as "POLYGON", "POL" , "MDL" , "MODEL" , "OBJ".
+3) Avoid scanning Track.bin files, they are likely using scrabled data and will result on false positives or no models found at all!
+4) Most Naomi games resources use DES key encryption and are further compressed into zlib, so you need to either reverse the format or open an issue, asking for X game support
 
 
-2) Why models are separate into many pieces?
+-  Why models are separate into many pieces?
 
 Depends by how they are stored in game, especially character models are often split into several pieces, so you'll have to manually re-assemble them
 
 
-3) No models found!
-
-If you are trying to extract models from a Naomi game, you need to decrypt the binary with DES key, and the big file usually contain all resources.
-There are also specific situations in Naomi games, that resources are further compressed into zlib, so you need to either reverse the format or open an issue, asking for X game support
-
-If you are trying to extract models from a Dreamcast game be sure to extract all files from GD-ROM explorer first!
-
-4) I want X game textures/music/sfx
+-  I want X game textures/music/sfx
 
 You can open an issue specifying the game you want and if it gets many requests I will give it a look!
 
