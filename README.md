@@ -14,7 +14,7 @@ If you are unsure which file contain models, you can extract them all to any tem
 
 3) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run the script. You'll be asked to open the script, which file to scan and where to extract files.
 
-
+4) To open extracted models in Blender, install and enable [Blender Naomilib Importer Addon](https://github.com/NaomiMod/blender-NaomiLib) 
 
 # FAQ:
 
