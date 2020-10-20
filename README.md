@@ -12,7 +12,7 @@ If you are unsure which file contain models, you can extract them all to any tem
 
 2) Download your game specific script or [Naomi Model Extractor](https://github.com/NaomiMod/games-ExtractTools/archive/main.zip) 
 
-3) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run the script. Open the script and you'll be asked which file to scan and where to extract files.
+3) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run the script. You'll be asked to open the script, which file to scan and where to extract files.
 
 
 
