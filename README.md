@@ -10,7 +10,11 @@ Exported models can be opened in Blender with
 1) Obtain your legally own game .GDI file and open it with [GD-ROM Explorer](https://japanese-cake.livejournal.com/5889.html), inside you will find multiple files that may contain game models.
 If you are unsure which file contain models, you can extract them all to any temporary folder.
 
-2) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run it. Open the script and you'll be asked which file to scan and where to extract files.
+2) Download your game specific script or [Naomi Model Extractor](https://raw.githubusercontent.com/NaomiMod/games-ExtractTools/main/NAOMI%20MODEL%20EXTRACTOR.bms) 
+
+3) Get [QuickBMS](https://aluigi.altervista.org/quickbms.htm) and run the script. Open the script and you'll be asked which file to scan and where to extract files.
+
+
 
 # FAQ:
 
