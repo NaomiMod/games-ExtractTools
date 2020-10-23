@@ -26,10 +26,15 @@ Textures are usually stored in separate archives without any header, so you have
 
 -  No models found!
 
-1) When searching for models in a Dreamcast game, be sure to extract all files from GD-ROM explorer first!
-2) Files containing models are often referred as "POLYGON", "POL" , "MDL" , "MODEL" , "OBJ".
-3) Avoid scanning Track.bin files, they are likely using scrabled data and will result on false positives or no models found at all!
-4) Most Naomi games resources use DES key encryption and are further compressed into zlib, so you need to either reverse the format or open an issue, asking for X game support
+1) When searching for models in a Dreamcast game, be sure to extract files from GD-ROM explorer first!
+
+2) Avoid scanning Track.bin or files, they are likely using scrambled data and will result on false positives or no models found at all!
+
+3) Files containing models are often referred as "POLYGON", "POL" , "MDL" , "MODEL" , "OBJ".
+
+4) Most Naomi games resources use DES key encryption and are further compressed into zlib, so you'll need to either map the structure or open an issue, asking for X game support
+
+5) Some games use a mix of NaomiLib and Ninja .NJ format, therefore .NJ models will not be detected/extracted.
 
 
 -  Why models are separate into many pieces?
