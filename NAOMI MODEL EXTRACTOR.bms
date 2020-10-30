@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------
-# NaomiLib | Models Extractor Ver 1.1  
+# NaomiLib | Models Extractor Ver 1.1 
 #
 # *Script by Vincent
 #
@@ -103,7 +103,7 @@ Else
 		 
 		
 		 
-		If CHECK_VALUE > 0x0A && CHECK_VALUE <= 0x01FF   # If value is in range
+		If CHECK_VALUE > 0x09 && CHECK_VALUE <= 0x01FF   # If value is in range
          
          #--------------------
          # YES! NAOMI LIB MODEL
@@ -119,7 +119,7 @@ Else
 		 Xmath MESH_END "MESH_SIZE+MESH_END_POINTER+0x4"
 		
 		 
-		       if MESH_END < FILE_END && MESH_END > 0 && MESH_SIZE >= 0      # Mesh is within file offset, valid model      
+		       if MESH_END <= FILE_END && MESH_END > 0 && MESH_SIZE >= 0      # Mesh is within file offset, valid model      
 				 goto MESH_END
 			     get NEXT_HEADER long
 				
@@ -127,6 +127,7 @@ Else
 		        Else                       # Mesh is out of bounds, not a valid model
 		         goto MODEL_START       
                  get JUNK longlong
+
 		         break
 				 
 			    Endif
