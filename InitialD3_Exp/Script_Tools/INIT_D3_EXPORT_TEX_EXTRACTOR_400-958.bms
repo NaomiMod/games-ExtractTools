@@ -1,0 +1,1515 @@
+#-----------------------------------
+#INITD3 TEXTURE EXTRACTOR by Vincent
+#-----------------------------------
+
+open fdsE "INID.dat" 9   # This is the file where pointers are stored
+
+get NAME FILENAME
+
+
+#-----------------------
+# TEXTURE POINTERS LIST
+#-----------------------
+
+
+Math TP_163 = 0x0706C008
+Math TP_164 = 0x0706C808
+Math TP_165 = 0x07159008
+Math TP_166 = 0x071F9808
+Math TP_167 = 0x0729A808
+Math TP_168 = 0x07337808
+Math TP_169 = 0x07444008
+Math TP_170 = 0x07444808
+Math TP_171 = 0x075A4008
+Math TP_172 = 0x07617008
+Math TP_173 = 0x076E2008
+Math TP_174 = 0x0775A008
+Math TP_175 = 0x077F8808
+Math TP_176 = 0x078B4808
+Math TP_177 = 0x07969808
+Math TP_178 = 0x07999008
+Math TP_179 = 0x0799B008
+Math TP_180 = 0x079B6008
+Math TP_181 = 0x079CA808
+Math TP_182 = 0x079E2008
+Math TP_183 = 0x079FA808
+Math TP_184 = 0x07A1B008
+Math TP_185 = 0x07A2F808
+Math TP_186 = 0x07A41008
+Math TP_187 = 0x07A5A008
+Math TP_188 = 0x07A7C008
+Math TP_189 = 0x07AA1008
+Math TP_190 = 0x07ACE808
+Math TP_191 = 0x07AE4808
+Math TP_192 = 0x07AFD008
+Math TP_193 = 0x07B04008
+Math TP_194 = 0x07B07808
+Math TP_195 = 0x07B08808
+Math TP_196 = 0x07B0A808
+Math TP_197 = 0x07C04008
+Math TP_198 = 0x07C45808
+Math TP_199 = 0x07C46008
+Math TP_200 = 0x07C47008
+Math TP_201 = 0x07C49808
+Math TP_202 = 0x07CFA808
+Math TP_203 = 0x07CFB008
+Math TP_204 = 0x07D28008
+Math TP_205 = 0x07D2A808
+Math TP_206 = 0x07D2B008
+Math TP_207 = 0x07D2B808
+Math TP_208 = 0x07EA2008
+Math TP_209 = 0x07EA4808
+Math TP_210 = 0x07EA5008
+Math TP_211 = 0x07EA5808
+Math TP_212 = 0x07F88008
+Math TP_213 = 0x0801E818
+Math TP_214 = 0x0801F808
+Math TP_215 = 0x0817B808
+Math TP_216 = 0x0817C008
+Math TP_217 = 0x0817C808
+Math TP_218 = 0x081E0808
+Math TP_219 = 0x082FA808
+Math TP_220 = 0x082FB008
+Math TP_221 = 0x082FB808
+Math TP_222 = 0x082FC808
+Math TP_223 = 0x08448008
+Math TP_224 = 0x08448808
+Math TP_225 = 0x08449008
+Math TP_226 = 0x08495808
+Math TP_227 = 0x08496008
+Math TP_228 = 0x084D3808
+Math TP_229 = 0x084E8808
+Math TP_230 = 0x0850D808
+Math TP_231 = 0x0850F808
+Math TP_232 = 0x08524008
+Math TP_233 = 0x08528808
+Math TP_234 = 0x08537008
+Math TP_235 = 0x0853B808
+Math TP_236 = 0x0853C008
+Math TP_237 = 0x08564008
+Math TP_238 = 0x0856E008
+Math TP_239 = 0x08596808
+Math TP_240 = 0x0859A008
+Math TP_241 = 0x0859E808
+Math TP_242 = 0x0859F008
+Math TP_243 = 0x08649008
+Math TP_244 = 0x08650008
+Math TP_245 = 0x0865D808
+Math TP_246 = 0x0865E808
+Math TP_247 = 0x08662008
+Math TP_248 = 0x08696008
+Math TP_249 = 0x086C5808
+Math TP_250 = 0x086F5808
+Math TP_251 = 0x086F6008
+Math TP_252 = 0x0870C818
+Math TP_253 = 0x08726808
+Math TP_254 = 0x087E5808
+Math TP_255 = 0x08802008
+Math TP_256 = 0x08807808
+Math TP_257 = 0x08815808
+Math TP_258 = 0x08817808
+Math TP_259 = 0x0881F808
+Math TP_260 = 0x08830008
+Math TP_261 = 0x0886F808
+Math TP_262 = 0x0889A808
+Math TP_263 = 0x0889C808
+Math TP_264 = 0x088B8808
+Math TP_265 = 0x088B9008
+Math TP_266 = 0x088E3008
+Math TP_267 = 0x088EE808
+Math TP_268 = 0x088EF008
+Math TP_269 = 0x08915008
+Math TP_270 = 0x08928808
+Math TP_271 = 0x0892A808
+Math TP_272 = 0x08945008
+Math TP_273 = 0x08946808
+Math TP_274 = 0x0894C808
+Math TP_275 = 0x08961008
+Math TP_276 = 0x08961808
+Math TP_277 = 0x0896B008
+Math TP_278 = 0x089CA808
+Math TP_279 = 0x08A90008
+Math TP_280 = 0x08AC5008
+Math TP_281 = 0x08B74808
+Math TP_282 = 0x08BA0008
+Math TP_283 = 0x08DFD808
+Math TP_284 = 0x08E16008
+Math TP_285 = 0x08E40808
+Math TP_286 = 0x08E41008
+Math TP_287 = 0x08E46008
+Math TP_288 = 0x08E59008
+Math TP_289 = 0x08E59808
+Math TP_290 = 0x08E5B008
+Math TP_291 = 0x08E64008
+Math TP_292 = 0x08E8F808
+Math TP_293 = 0x08E92808
+Math TP_294 = 0x08E95008
+Math TP_295 = 0x08E98808
+Math TP_296 = 0x08E9B008
+Math TP_297 = 0x08EA8808
+Math TP_298 = 0x08EAA008
+Math TP_299 = 0x08EB2008
+Math TP_300 = 0x08EDC008
+Math TP_301 = 0x08EF4008
+Math TP_302 = 0x08EF9008
+Math TP_303 = 0x08F4E008
+Math TP_304 = 0x08F85808
+Math TP_305 = 0x08FA0008
+Math TP_306 = 0x08FC3808
+Math TP_307 = 0x08FC5008
+Math TP_308 = 0x08FC8808
+Math TP_309 = 0x08FCA008
+Math TP_310 = 0x08FE1808
+Math TP_311 = 0x08FE2008
+Math TP_312 = 0x09008808
+Math TP_313 = 0x09014008
+Math TP_314 = 0x09017808
+Math TP_315 = 0x0901B008
+Math TP_316 = 0x0901D808
+Math TP_317 = 0x0901E008
+Math TP_318 = 0x09030808
+Math TP_319 = 0x09036808
+Math TP_320 = 0x09062008
+Math TP_321 = 0x09065808
+Math TP_322 = 0x09078008
+Math TP_323 = 0x09084808
+Math TP_324 = 0x09086008
+Math TP_325 = 0x09088008
+Math TP_326 = 0x09124808
+Math TP_327 = 0x09125008
+Math TP_328 = 0x0932C008
+Math TP_329 = 0x0932C808
+Math TP_330 = 0x0932D008
+Math TP_331 = 0x0932D808
+Math TP_332 = 0x0932E008
+Math TP_333 = 0x0932E808
+Math TP_334 = 0x0932F008
+Math TP_335 = 0x0932F808
+Math TP_336 = 0x09339008
+Math TP_337 = 0x0933D808
+Math TP_338 = 0x09340008
+Math TP_339 = 0x09342008
+Math TP_340 = 0x0935A008
+Math TP_341 = 0x09372808
+Math TP_342 = 0x09698008
+Math TP_343 = 0x0985D808
+Math TP_344 = 0x09874808
+Math TP_345 = 0x09C89808
+Math TP_346 = 0x09EF8808
+Math TP_347 = 0x09F13008
+Math TP_348 = 0x0A144808
+Math TP_349 = 0x0A386008
+Math TP_350 = 0x0A397808
+Math TP_351 = 0x0A6CA008
+Math TP_352 = 0x0A90D808
+Math TP_353 = 0x0A926808
+Math TP_354 = 0x0AC61808
+Math TP_355 = 0x0AE4A008
+Math TP_356 = 0x0AE57808
+Math TP_357 = 0x0B0B5808
+Math TP_358 = 0x0B26D008
+Math TP_359 = 0x0B283808
+Math TP_360 = 0x0B6A7808
+Math TP_361 = 0x0B866008
+Math TP_362 = 0x0B86E008
+Math TP_363 = 0x0BBB2008
+Math TP_364 = 0x0BD5E008
+Math TP_365 = 0x0BD67008
+Math TP_366 = 0x0BFF6008
+Math TP_367 = 0x0BFF7808
+Math TP_368 = 0x0C429808
+Math TP_369 = 0x0C432808
+Math TP_370 = 0x0C76D008
+Math TP_371 = 0x0C77C008
+Math TP_372 = 0x0CB53008
+Math TP_373 = 0x0CF28808
+Math TP_374 = 0x0D482008
+Math TP_375 = 0x0D601008
+Math TP_376 = 0x0D61E008
+Math TP_377 = 0x0D862808
+Math TP_378 = 0x0D864008
+Math TP_379 = 0x0DBE4808
+Math TP_380 = 0x0DBE6008
+Math TP_381 = 0x0DF35808
+Math TP_382 = 0x0DF3F808
+Math TP_383 = 0x0DF41008
+Math TP_384 = 0x0DF61808
+Math TP_385 = 0x0DF76008
+Math TP_386 = 0x0DF8A008
+
+
+
+#--------------------------------------------
+# SPECIFY WHICH POINTER TO USE FOR EACH FILE!
+#--------------------------------------------
+
+
+
+
+if NAME = "400.zlib"
+Math STARTP_ = TP_163 9    #  
+
+
+elif NAME = "402.zlib"
+Math STARTP_ = TP_164 9    #  
+
+
+elif NAME = "404.zlib"
+Math STARTP_ = TP_165 9    #  
+
+
+elif NAME = "406.zlib"
+Math STARTP_ = TP_166 9    #  
+
+
+
+elif NAME = "408.zlib"
+Math STARTP_ = TP_167 9    #  
+
+
+
+elif NAME = "411.zlib"
+Math STARTP_ = TP_168 9    #  
+
+
+
+elif NAME = "412.zlib"
+Math STARTP_ = TP_169 9    #  
+
+
+
+elif NAME = "415.zlib"
+Math STARTP_ = TP_170 9    #  
+
+
+
+elif NAME = "416.zlib"
+Math STARTP_ = TP_171 9    #  
+
+
+
+elif NAME = "418.zlib"
+Math STARTP_ = TP_172 9    #  
+
+
+
+elif NAME = "421.zlib"
+Math STARTP_ = TP_173 9    #  
+
+
+
+elif NAME = "423.zlib"
+Math STARTP_ = TP_174 9    #  
+
+
+
+elif NAME = "425.zlib"
+Math STARTP_ = TP_173 9    #  
+
+
+
+elif NAME = "427.zlib"
+Math STARTP_ = TP_176 9    #  
+
+
+
+elif NAME = "429.zlib"
+Math STARTP_ = TP_177 9    #  
+
+
+
+elif NAME = "430.zlib"
+Math STARTP_ = TP_178 9    #  
+
+
+
+elif NAME = "433.zlib"
+Math STARTP_ = TP_179 9    #  
+
+
+
+elif NAME = "435.zlib"
+Math STARTP_ = TP_180 9    #  
+
+
+
+elif NAME = "437.zlib"
+Math STARTP_ = TP_180 9    #  
+
+
+
+elif NAME = "439.zlib"
+Math STARTP_ = TP_181 9    #  
+
+
+
+elif NAME = "440.zlib"
+Math STARTP_ = TP_182 9    #  
+
+
+
+elif NAME = "441.zlib"
+Math STARTP_ = TP_183 9    #  
+
+
+
+elif NAME = "443.zlib"
+Math STARTP_ = TP_184 9    #  
+
+
+
+elif NAME = "445.zlib"
+Math STARTP_ = TP_185 9    #  
+
+
+
+elif NAME = "447.zlib"
+Math STARTP_ = TP_186 9    #  
+
+
+
+elif NAME = "449.zlib"
+Math STARTP_ = TP_187 9    #  
+
+
+
+elif NAME = "451.zlib"
+Math STARTP_ = TP_188 9    #  
+
+
+
+elif NAME = "453.zlib"
+Math STARTP_ = TP_189 9    #  
+
+
+
+elif NAME = "455.zlib"
+Math STARTP_ = TP_190 9    #  
+
+
+
+elif NAME = "457.zlib"
+Math STARTP_ = TP_191 9    #  
+
+
+
+elif NAME = "459.zlib"
+Math STARTP_ = TP_193 9    #  
+
+
+
+elif NAME = "461.zlib"
+Math STARTP_ = TP_193 9    #  
+
+
+
+elif NAME = "463.zlib"
+Math STARTP_ = TP_195 9    #  
+
+
+
+elif NAME = "465.zlib"
+Math STARTP_ = TP_195 9    #  
+
+
+
+elif NAME = "466.zlib"
+Math STARTP_ = TP_196 9    #  
+
+
+
+elif NAME = "468.zlib"
+Math STARTP_ = TP_197 9    #  
+
+
+
+elif NAME = "469.zlib"
+Math STARTP_ = TP_197 9    #  
+
+
+
+elif NAME = "470.zlib"
+Math STARTP_ = TP_198 9    #  
+
+
+
+elif NAME = "471.zlib"
+Math STARTP_ = TP_199 9    #  
+
+
+
+elif NAME = "480.zlib"
+Math STARTP_ = TP_203 9    #  
+
+
+elif NAME = "481.zlib"
+Math STARTP_ = TP_204 9    #  
+
+
+
+elif NAME = "482.zlib"
+Math STARTP_ = TP_204 9    #  
+
+
+elif NAME = "483.zlib"
+Math STARTP_ = TP_204 9    #  
+
+
+elif NAME = "484.zlib"
+Math STARTP_ = TP_215 9    # 
+
+
+elif NAME = "485.zlib"
+Math STARTP_ = TP_205 9    #  
+
+
+
+elif NAME = "486.zlib"
+Math STARTP_ = TP_206 9    #  
+
+
+
+elif NAME = "487.zlib"
+Math STARTP_ = TP_206 9    #  
+
+
+elif NAME = "496.zlib"
+Math STARTP_ = TP_209 9    #  
+
+
+
+elif NAME = "497.zlib"
+Math STARTP_ = TP_209 9    #  
+
+
+
+elif NAME = "498.zlib"
+Math STARTP_ = TP_210 9    #  
+
+
+
+elif NAME = "499.zlib"
+Math STARTP_ = TP_204 9    #  
+
+
+
+elif NAME = "502.zlib"
+Math STARTP_ = TP_212 9    #  
+
+
+
+elif NAME = "503.zlib"
+Math STARTP_ = TP_213 9    #  
+
+
+
+elif NAME = "512.zlib"
+Math STARTP_ = TP_214 9    #  
+
+
+
+elif NAME = "513.zlib"
+Math STARTP_ = TP_215 9    #  
+
+
+
+elif NAME = "514.zlib"
+Math STARTP_ = TP_216 9    #  
+
+
+
+elif NAME = "515.zlib"
+Math STARTP_ = TP_217 9    #  
+
+
+
+elif NAME = "516.zlib"
+Math STARTP_ = TP_219 9    #  
+
+
+
+elif NAME = "517.zlib"
+Math STARTP_ = TP_219 9    #  
+
+
+
+elif NAME = "518.zlib"
+Math STARTP_ = TP_220 9    #  
+
+
+
+elif NAME = "519.zlib"
+Math STARTP_ = TP_221 9    #  
+
+
+
+elif NAME = "528.zlib"
+Math STARTP_ = TP_222 9    #  
+
+
+
+elif NAME = "529.zlib"
+Math STARTP_ = TP_223 9    #  
+
+
+
+elif NAME = "530.zlib"
+Math STARTP_ = TP_224 9    #  
+
+
+
+elif NAME = "531.zlib"
+Math STARTP_ = TP_225 9    #  
+
+
+
+elif NAME = "533.zlib"
+Math STARTP_ = TP_227 9    #  
+
+
+
+elif NAME = "534.zlib"
+Math STARTP_ = TP_228 9    #  
+
+
+
+elif NAME = "537.zlib"
+Math STARTP_ = TP_228 9    #  
+
+
+
+elif NAME = "538.zlib"
+Math STARTP_ = TP_229 9    #  
+
+
+
+elif NAME = "541.zlib"
+Math STARTP_ = TP_230 9    #  
+
+
+
+elif NAME = "542.zlib"
+Math STARTP_ = TP_231 9    #  
+
+
+
+elif NAME = "543.zlib"
+Math STARTP_ = TP_232 9    #  
+
+
+
+elif NAME = "544.zlib"
+Math STARTP_ = TP_233 9    #  
+
+
+
+elif NAME = "547.zlib"
+Math STARTP_ = TP_234 9    #  
+
+
+
+elif NAME = "549.zlib"
+Math STARTP_ = TP_235 9    #  
+
+
+
+elif NAME = "551.zlib"
+Math STARTP_ = TP_236 9    #  
+
+
+
+elif NAME = "553.zlib"
+Math STARTP_ = TP_237 9    #  
+
+
+
+elif NAME = "555.zlib"
+Math STARTP_ = TP_238 9    #  
+
+
+
+elif NAME = "556.zlib"
+Math STARTP_ = TP_239 9    #  
+
+
+
+elif NAME = "559.zlib"
+Math STARTP_ = TP_240 9    #  
+
+
+
+elif NAME = "561.zlib"
+Math STARTP_ = TP_241 9    #  
+
+
+
+elif NAME = "563.zlib"
+Math STARTP_ = TP_242 9    #  
+
+
+
+elif NAME = "565.zlib"
+Math STARTP_ = TP_243 9    #  
+
+
+
+elif NAME = "566.zlib"
+Math STARTP_ = TP_244 9    #  
+
+
+
+elif NAME = "569.zlib"
+Math STARTP_ = TP_245 9    #  
+
+
+
+elif NAME = "570.zlib"
+Math STARTP_ = TP_246 9    #  
+
+
+
+elif NAME = "573.zlib"
+Math STARTP_ = TP_247 9    #  
+
+
+
+elif NAME = "575.zlib"
+Math STARTP_ = TP_248 9    #  
+
+
+
+elif NAME = "577.zlib"
+Math STARTP_ = TP_249 9    #  
+
+
+
+elif NAME = "578.zlib"
+Math STARTP_ = TP_250 9    #  
+
+
+
+elif NAME = "580.zlib"
+Math STARTP_ = TP_251 9    #  
+
+
+
+elif NAME = "583.zlib"
+Math STARTP_ = TP_252 9    #  
+
+
+
+elif NAME = "584.zlib"
+Math STARTP_ = TP_253 9    #  
+
+
+
+elif NAME = "587.zlib"
+Math STARTP_ = TP_254 9    #  
+
+
+
+elif NAME = "589.zlib"
+Math STARTP_ = TP_255 9    #  
+
+
+
+elif NAME = "591.zlib"
+Math STARTP_ = TP_256 9    #  
+
+
+
+elif NAME = "592.zlib"
+Math STARTP_ = TP_257 9    #  
+
+
+
+elif NAME = "595.zlib"
+Math STARTP_ = TP_258 9    #  
+
+
+
+elif NAME = "597.zlib"
+Math STARTP_ = TP_259 9    #  
+
+
+
+elif NAME = "599.zlib"
+Math STARTP_ = TP_260 9    #  
+
+
+
+elif NAME = "601.zlib"
+Math STARTP_ = TP_261 9    #  
+
+
+
+elif NAME = "602.zlib"
+Math STARTP_ = TP_262 9    #  
+
+
+
+elif NAME = "605.zlib"
+Math STARTP_ = TP_263 9    #  
+
+
+
+elif NAME = "606.zlib"
+Math STARTP_ = TP_264 9    #  
+
+
+
+elif NAME = "609.zlib"
+Math STARTP_ = TP_265 9    #  
+
+
+
+elif NAME = "610.zlib"
+Math STARTP_ = TP_266 9    #  
+
+
+
+elif NAME = "612.zlib"
+Math STARTP_ = TP_267 9    #  
+
+
+
+elif NAME = "614.zlib"
+Math STARTP_ = TP_268 9    #  
+
+
+
+elif NAME = "616.zlib"
+Math STARTP_ = TP_269 9    #  
+
+
+
+elif NAME = "618.zlib"
+Math STARTP_ = TP_270 9    #  
+
+
+
+elif NAME = "621.zlib"
+Math STARTP_ = TP_271 9    #  
+
+
+
+elif NAME = "622.zlib"
+Math STARTP_ = TP_272 9    #  
+
+
+
+elif NAME = "624.zlib"
+Math STARTP_ = TP_273 9    #  
+
+
+
+elif NAME = "627.zlib"
+Math STARTP_ = TP_274 9    #  
+
+
+
+elif NAME = "628.zlib"
+Math STARTP_ = TP_275 9    #  
+
+
+
+elif NAME = "631.zlib"
+Math STARTP_ = TP_276 9    #  
+
+
+
+elif NAME = "632.zlib"
+Math STARTP_ = TP_277 9    #  
+
+
+
+elif NAME = "635.zlib"
+Math STARTP_ = TP_278 9    #  
+
+
+
+elif NAME = "636.zlib"
+Math STARTP_ = TP_279 9    #  
+
+
+
+elif NAME = "638.zlib"
+Math STARTP_ = TP_280 9    #  
+
+
+
+elif NAME = "641.zlib"
+Math STARTP_ = TP_281 9    #  
+
+
+
+elif NAME = "643.zlib"
+Math STARTP_ = TP_282 9    #  
+
+
+
+elif NAME = "646.zlib"
+Math STARTP_ = TP_283 9    #  
+
+
+
+elif NAME = "649.zlib"
+Math STARTP_ = TP_284 9    #  
+
+
+
+elif NAME = "650.zlib"
+Math STARTP_ = TP_285 9    #  
+
+
+
+elif NAME = "653.zlib"
+Math STARTP_ = TP_286 9    #  
+
+
+
+elif NAME = "657.zlib"
+Math STARTP_ = TP_287 9    #  
+
+
+
+elif NAME = "661.zlib"
+Math STARTP_ = TP_288 9    #  
+
+
+
+elif NAME = "662.zlib"
+Math STARTP_ = TP_289 9    #  
+
+
+
+elif NAME = "663.zlib"
+Math STARTP_ = TP_290 9    #  
+
+
+
+elif NAME = "665.zlib"
+Math STARTP_ = TP_291 9    #  
+
+
+
+elif NAME = "667.zlib"
+Math STARTP_ = TP_291 9    #  
+
+
+
+elif NAME = "669.zlib"
+Math STARTP_ = TP_293 9    #  
+
+
+
+elif NAME = "671.zlib"
+Math STARTP_ = TP_294 9    #  
+
+
+
+elif NAME = "673.zlib"
+Math STARTP_ = TP_295 9    #  
+
+
+
+elif NAME = "675.zlib"
+Math STARTP_ = TP_296 9    #  
+
+
+
+elif NAME = "676.zlib"
+Math STARTP_ = TP_297 9    #  
+
+
+
+elif NAME = "679.zlib"
+Math STARTP_ = TP_298 9    #  
+
+
+
+elif NAME = "680.zlib"
+Math STARTP_ = TP_299 9    #  
+
+
+
+elif NAME = "755.zlib"
+Math STARTP_ = TP_301 9    #  
+
+
+
+elif NAME = "756.zlib"
+Math STARTP_ = TP_302 9    #  
+
+
+
+elif NAME = "758.zlib"
+Math STARTP_ = TP_303 9    #  
+
+
+
+elif NAME = "761.zlib"
+Math STARTP_ = TP_304 9    #  
+
+
+
+elif NAME = "762.zlib"
+Math STARTP_ = TP_305 9    #  
+
+
+
+elif NAME = "764.zlib"
+Math STARTP_ = TP_306 9    #  
+
+
+
+elif NAME = "767.zlib"
+Math STARTP_ = TP_307 9    #  
+
+
+
+elif NAME = "769.zlib"
+Math STARTP_ = TP_308 9    #  
+
+
+
+elif NAME = "770.zlib"
+Math STARTP_ = TP_309 9    #  
+
+
+
+elif NAME = "773.zlib"
+Math STARTP_ = TP_310 9    #  
+
+
+
+elif NAME = "774.zlib"
+Math STARTP_ = TP_311 9    #  
+
+
+
+elif NAME = "776.zlib"
+Math STARTP_ = TP_312 9    #  
+
+
+
+elif NAME = "778.zlib"
+Math STARTP_ = TP_313 9    #  
+
+
+
+elif NAME = "779.zlib"
+Math STARTP_ = TP_313 9    #  
+
+
+
+elif NAME = "781.zlib"
+Math STARTP_ = TP_314 9    #  
+
+
+elif NAME = "783.zlib"
+Math STARTP_ = TP_246 9    #  
+
+
+elif NAME = "725.zlib"
+Math STARTP_ = TP_300 9    #  
+
+
+elif NAME = "785.zlib"
+Math STARTP_ = TP_315 9    #  
+
+
+elif NAME = "786.zlib"
+Math STARTP_ = TP_316 9    #  
+
+
+
+elif NAME = "788.zlib"
+Math STARTP_ = TP_318 9    #  
+
+
+
+elif NAME = "791.zlib"
+Math STARTP_ = TP_319 9    #  
+
+
+
+elif NAME = "793.zlib"
+Math STARTP_ = TP_320 9    #  
+
+
+
+elif NAME = "795.zlib"
+Math STARTP_ = TP_321 9    #  
+
+
+
+elif NAME = "796.zlib"
+Math STARTP_ = TP_322 9    #  
+
+
+
+elif NAME = "798.zlib"
+Math STARTP_ = TP_323 9    #  
+
+
+
+elif NAME = "800.zlib"
+Math STARTP_ = TP_324 9    #  
+
+
+
+elif NAME = "803.zlib"
+Math STARTP_ = TP_325 9    #  
+
+
+
+elif NAME = "805.zlib"
+Math STARTP_ = TP_326 9    #  
+
+
+
+elif NAME = "806.zlib"
+Math STARTP_ = TP_327 9    #  
+
+
+
+elif NAME = "808.zlib"
+Math STARTP_ = TP_328 9    #  
+
+
+
+elif NAME = "809.zlib"
+Math STARTP_ = TP_329 9    #  
+
+
+
+elif NAME = "810.zlib"
+Math STARTP_ = TP_330 9    #  
+
+
+
+elif NAME = "811.zlib"
+Math STARTP_ = TP_331 9    #  
+
+
+
+elif NAME = "812.zlib"
+Math STARTP_ = TP_332 9    #  
+
+
+
+elif NAME = "813.zlib"
+Math STARTP_ = TP_333 9    #  
+
+
+
+elif NAME = "814.zlib"
+Math STARTP_ = TP_334 9    #  
+
+
+
+elif NAME = "815.zlib"
+Math STARTP_ = TP_335 9    #  
+
+
+
+elif NAME = "816.zlib"
+Math STARTP_ = TP_336 9    #  
+
+
+
+elif NAME = "827.zlib"
+Math STARTP_ = TP_337 9    #  
+
+
+
+elif NAME = "828.zlib"
+Math STARTP_ = TP_338 9    #  
+
+
+
+elif NAME = "831.zlib"
+Math STARTP_ = TP_339 9    #  
+
+
+
+elif NAME = "833.zlib"
+Math STARTP_ = TP_340 9    #  
+
+
+
+elif NAME = "835.zlib"
+Math STARTP_ = TP_341 9    #  
+
+
+
+elif NAME = "839.zlib"
+Math STARTP_ = TP_342 9    #  
+
+
+
+elif NAME = "841.zlib"
+Math STARTP_ = TP_343 9    #  
+
+
+
+elif NAME = "843.zlib"
+Math STARTP_ = TP_344 9    #  
+
+
+
+elif NAME = "847.zlib"
+Math STARTP_ = TP_345 9    #  
+
+
+
+elif NAME = "848.zlib"
+Math STARTP_ = TP_346 9    #  
+
+
+
+elif NAME = "850.zlib"
+Math STARTP_ = TP_347 9    #  
+
+
+
+elif NAME = "853.zlib"
+Math STARTP_ = TP_348 9    #  
+
+
+
+elif NAME = "854.zlib"
+Math STARTP_ = TP_349 9    #  
+
+
+
+elif NAME = "856.zlib"
+Math STARTP_ = TP_350 9    #  
+
+
+
+elif NAME = "861.zlib"
+Math STARTP_ = TP_351 9    #  
+
+
+
+elif NAME = "862.zlib"
+Math STARTP_ = TP_352 9    #  
+
+
+
+elif NAME = "864.zlib"
+Math STARTP_ = TP_353 9    #  
+
+
+
+elif NAME = "869.zlib"
+Math STARTP_ = TP_354 9    #  
+
+
+
+elif NAME = "871.zlib"
+Math STARTP_ = TP_355 9    #  
+
+
+
+elif NAME = "873.zlib"
+Math STARTP_ = TP_356 9    #  
+
+
+
+elif NAME = "875.zlib"
+Math STARTP_ = TP_357 9    #  
+
+
+
+elif NAME = "877.zlib"
+Math STARTP_ = TP_358 9    #  
+
+
+
+elif NAME = "879.zlib"
+Math STARTP_ = TP_359 9    #  
+
+
+
+elif NAME = "883.zlib"
+Math STARTP_ = TP_360 9    #  
+
+
+
+elif NAME = "885.zlib"
+Math STARTP_ = TP_361 9    #  
+
+
+
+elif NAME = "887.zlib"
+Math STARTP_ = TP_362 9    #  
+
+
+
+elif NAME = "891.zlib"
+Math STARTP_ = TP_363 9    #  
+
+
+
+elif NAME = "892.zlib"
+Math STARTP_ = TP_364 9    #  
+
+
+
+elif NAME = "893.zlib"
+Math STARTP_ = TP_365 9    #  
+
+
+
+elif NAME = "897.zlib"
+Math STARTP_ = TP_366 9    #  
+
+
+
+elif NAME = "898.zlib"
+Math STARTP_ = TP_367 9    #  
+
+
+
+elif NAME = "904.zlib"
+Math STARTP_ = TP_368 9    #  
+
+
+
+elif NAME = "905.zlib"
+Math STARTP_ = TP_369 9    #  
+
+
+
+elif NAME = "911.zlib"
+Math STARTP_ = TP_370 9    #  
+
+
+
+elif NAME = "912.zlib"
+Math STARTP_ = TP_371 9    #  
+
+
+
+elif NAME = "918.zlib"
+Math STARTP_ = TP_372 9    #  
+
+
+
+elif NAME = "923.zlib"
+Math STARTP_ = TP_373 9    #  
+
+
+
+elif NAME = "927.zlib"
+Math STARTP_ = TP_374 9    #  
+
+
+
+elif NAME = "928.zlib"
+Math STARTP_ = TP_375 9    #  
+
+
+
+elif NAME = "929.zlib"
+Math STARTP_ = TP_376 9    #  
+
+
+
+elif NAME = "933.zlib"
+Math STARTP_ = TP_377 9    #  
+
+
+
+elif NAME = "934.zlib"
+Math STARTP_ = TP_378 9    #  
+
+
+
+elif NAME = "940.zlib"
+Math STARTP_ = TP_378 9    #  
+
+
+
+elif NAME = "941.zlib"
+Math STARTP_ = TP_379 9    #  
+
+
+
+elif NAME = "948.zlib"
+Math STARTP_ = TP_381 9    #  
+
+
+
+elif NAME = "949.zlib"
+Math STARTP_ = TP_382 9    #  
+
+
+
+elif NAME = "951.zlib"
+Math STARTP_ = TP_383 9    #  
+
+
+
+elif NAME = "952.zlib"
+Math STARTP_ = TP_385 9    #  
+
+
+
+elif NAME = "954.zlib"
+Math STARTP_ = TP_384 9    #  
+
+
+
+elif NAME = "955.zlib"
+Math STARTP_ = TP_385 9    #  
+
+
+
+elif NAME = "957.zlib"
+Math STARTP_ = TP_386 9    #  
+
+
+Else
+Break
+Exit
+endif
+
+#---------------------------
+# DECOMPRESS ZLIB
+#---------------------------
+
+
+           get SIZE asize
+		   
+		   XMath SIZE "SIZE -0x20" 
+
+
+goto 0x1c                   # Uncompressed size
+get ZSIZE long
+
+Math OFFSET = 0x20          # Start of data
+comtype zlib
+Clog MEMORY_FILE2 OFFSET SIZE ZSIZE
+if ZSIZE = 0
+break
+endif
+
+#----------------
+# SCRIPT START
+#----------------
+
+get TEXTURE_END asize -2
+
+goto STARTP_ 9
+math A = 1
+
+
+goto STARTP_
+
+For Loop
+
+savepos CURRENTPOS 9
+
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+
+Xmath LPOS "CURRENTPOS-0x8" 
+
+Xmath PPOS "CURRENTPOS-0x4" 
+
+get POINTER long 9
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+if NAME = "69.zlib" && A = "290"
+
+break 
+endif
+
+if NAME = "58.zlib" && A = "238"
+
+break 
+endif
+
+if NAME = "37.zlib" && A = "303"
+
+break 
+endif
+
+if NAME = "168.zlib" && A = "2"
+
+break 
+endif
+
+if NAME = "169.zlib" && A = "2"
+
+break 
+endif
+
+if NEXTP_ > 0 
+
+
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+String FILENAME P "Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME POINTER TEXSIZE -2
+
+append
+
+XMath A "A+1"
+
+Math CURRENTPOS = NEXTPOS
+
+
+
+
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+
+XMath TEXSIZE "ZSIZE-POINTER"
+String FILENAME P "Texture_%A%.pvr"	
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME POINTER TEXSIZE -2
+
+append
+
+break
+endif
+
+
+Next loop

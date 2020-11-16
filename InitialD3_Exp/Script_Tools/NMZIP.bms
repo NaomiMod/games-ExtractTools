@@ -1,0 +1,43 @@
+#----------------------------------------------------------------------
+# InitD3-REVA | NMZIP files Extractor Ver 1.0  
+# 
+# *Script by Vincent
+#
+#
+# Credits: DKDave, Alexvgz for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+get FILE_END asize
+Math FILE_NUM = 1
+
+FindLoc FILE_START String "NMZIP" 0 ""			
+
+If FILE_START == ""
+	Break
+
+Else
+Goto FILE_START
+Get JUNK Long
+endif
+
+For
+	FindLoc OFFSET String "NMZIP" 0 ""
+
+	String FILENAME P "%FILE_NUM%.zlib"
+
+	If OFFSET = ""							
+		XMath SIZE "FILE_END - FILE_START"
+		Log FILENAME FILE_START SIZE
+		Break
+	Endif
+
+	XMath SIZE "OFFSET - FILE_START"
+	Log FILENAME FILE_START SIZE
+
+	Math FILE_START = OFFSET
+	Goto OFFSET
+	Get JUNK Long
+	Math FILE_NUM + 1
+
+Next

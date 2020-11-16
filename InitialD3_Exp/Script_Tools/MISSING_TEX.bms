@@ -1,0 +1,83 @@
+#--------------------------------------------
+#INITD3 REV A - TEXTURE EXTRACTOR by Vincent
+#-------------------------------------------
+
+
+#-----------------------
+# MISSING TEX
+#-----------------------
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x40\x00\x00\x02\x0D\x00\x00\x80\x00\x40\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_1.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_1.pvr" 0x63b6800 0x4000
+
+
+append
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x40\x00\x00\x02\x0D\x00\x00\x80\x00\x40\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_2.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_2.pvr" 0x63d2800 0x4000
+
+
+append
+
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x10\x00\x00\x02\x0D\x00\x00\x40\x00\x20\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_3.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_3.pvr" 0x8e7c800 0x1000
+
+append
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x80\x00\x00\x02\x09\x00\x00\x80\x00\x80\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_4.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_4.pvr" 0x8e7D800 0x8000
+
+append
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x80\x00\x00\x02\x01\x00\x00\x80\x00\x80\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_5.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_5.pvr" 0x8E85800‬ 0x8000
+
+append
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54\x00\x20\x00\x00\x02\x01\x00\x00\x40\x00\x40\x00"
+get MEMORYSIZE asize -1
+
+append
+
+Log "Texture_6.pvr" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "Texture_6.pvr" 0x8E8d800‬ 0x2000
+
+append
+
+
+
