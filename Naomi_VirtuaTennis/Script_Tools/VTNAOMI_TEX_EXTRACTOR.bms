@@ -1,1 +1,918 @@
+#---------------------------------------------------
+#
+#     VIRTUA TENNIS - NAOMI - TEXTURE EXTRACTOR 
+#     
+#     by Vincent 25/01/2021
+#---------------------------------------------------
 
+open fdsE "epr-22927.ic22" 9   # This is the file where pointers are stored
+
+get NAME FILENAME
+get BNAME BASENAME
+print "Extracting PVR from: %NAME%"
+get filesize asize
+
+
+if NAME = "mpr-22917.ic2"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xc7ea8
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "POINTER-VAR" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "POINTER-VAR" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xAC0 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xAC0 
+
+append
+
+break
+endif
+
+
+Next loop
+endif
+
+if name = "mpr-22920.ic5"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xcb2d8
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xd60 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xd60 
+
+append
+
+break
+endif
+
+
+Next loop
+endif
+
+
+if NAME = "mpr-22921.ic6"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0x185ed8
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > POINTER
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "POINTER-VAR" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+if A = 50
+PutVarChr MEMORY_FILE 0 0xAC0 Long
+else
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+endif
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+if A = 50
+Log FILENAME OFFSET 0xAC0
+else
+Log FILENAME OFFSET TEXSIZE
+endif
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ < POINTER OR NEXTP_ = 4294967295‬ 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "POINTER-VAR" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0x20000 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0x20000 
+
+append
+
+break
+endif
+
+
+Next loop
+endif
+
+if NAME = "mpr-22918.ic3"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xc9638
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xAC0 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xAC0 
+
+append
+
+break
+endif
+
+
+Next loop
+
+
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xc9dd8
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 122
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "(POINTER-VAR)+0x600000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "(POINTER-VAR)+0x600000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xD60 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xD60 
+
+append
+
+break
+endif
+
+
+Next loop
+endif
+
+
+
+
+if NAME = "mpr-22919.ic4"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xca558
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "(POINTER-VAR)+0x200000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xAC0 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xAC0 
+
+append
+
+break
+endif
+
+
+Next loop
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0xcac58
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 112
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > 0 
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "(POINTER-VAR)+0x600000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ = 0 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "(POINTER-VAR)+0x600000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0x1d60 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0x1d60 
+
+append
+
+break
+endif
+
+
+Next loop
+endif
+
+
+if NAME = "mpr-22922.ic7"
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0x186388
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 1
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if NEXTP_ > POINTER
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "POINTER-VAR" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if NEXTP_ < POINTER OR NEXTP_ = 4294967295‬ 
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "POINTER-VAR" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0xd60 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET 0xd60 
+
+append
+
+break
+endif
+
+
+Next loop
+
+#----------------
+# SCRIPT START
+#----------------
+STARTP_ = 0x186448
+goto STARTP_ 9
+get VAR long 9
+# print "VAR = %VAR|x%"
+math A = 13
+
+
+goto STARTP_ 9
+
+For Loop
+
+
+savepos CURRENTPOS 9
+# print "current pos: %CURRENTPOS|x%"
+Xmath NEXTPOS "CURRENTPOS+0x10" 
+# print "Next pos: %NEXTPOS|x%"
+Xmath LPOS "CURRENTPOS-0x8" 
+# print "Lenghtpos: %LPOS|x%"
+Xmath PPOS "CURRENTPOS-0x4" 
+# print "Pixel pos: %PPOS|x%"
+get POINTER long 9
+# print "Pointer Value = %POINTER|x%"
+
+
+
+
+goto NEXTPOS 9
+get NEXTP_ long 9
+
+
+# print "next pointer value: %NEXTP_|x%"
+
+
+if A < 18
+
+Xmath TEXSIZE "NEXTP_-POINTER"
+# print "TEXSIZE: %TEXSIZE|x%"
+String FILENAME P "%NAME%_Texture_%A%.pvr"
+
+
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+xMath OFFSET "POINTER-VAR+0x400000" 
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 TEXSIZE Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME OFFSET TEXSIZE 
+
+append
+
+XMath A "A+1"
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+Math CURRENTPOS = NEXTPOS
+# print "Current pos: %CURRENTPOS% | nextpos: %NEXTPOS%"
+# print "------------------------"
+# print "LOOP END"
+# print "------------------------"
+goto NEXTPOS 9
+endif
+
+if A = 18
+# print "LAST POINTER!"
+String FILENAME P "%NAME%_Texture_%A%.pvr"	
+xMath OFFSET "POINTER-VAR+0x400000" 
+Xmath filesize "filesize-offset"
+
+set MEMORY_FILE binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"
+get MEMORYSIZE asize -1
+
+append
+
+Log "FILENAME" 0 MEMORYSIZE -1
+PutVarChr MEMORY_FILE 0 0x5d60 Long
+Log "FILENAME" 0 4 -1
+Log FILENAME PPOS 4 9 -1
+Log FILENAME LPOS 4 9 -1
+
+Log FILENAME 0x41d2e0 0x5d60 
+
+append
+
+break
+endif
+
+
+Next loop
+endif

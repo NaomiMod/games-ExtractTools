@@ -1,0 +1,53 @@
+#---------------------------------------------------
+#
+#     VIRTUA TENNIS - NAOMI - DTPK Extractor
+#     
+#     by Vincent 25/01/2021
+#---------------------------------------------------
+
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+if filename = "epr-22927.ic22"
+break
+
+else
+get BNAME basename
+Math PADDING = 0x0                    # ON by Default: How many bytes to trim from each extracted file
+
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+goto 0x000000
+
+Math A = 1
+
+For A
+
+String FILENAME P "%BNAME%_SoundPack_%A%.snd"
+
+
+
+	If  CURRENT_OFFSET = ""
+	    Break
+		
+    Else
+	    FindLoc SP_OFFSET String "DTPK"
+		goto SP_OFFSET
+		get JUNK long
+		get JUNK long
+		get SIZE long
+		Xmath TARGET "SIZE + PADDING"
+	    Log FILENAME SP_OFFSET TARGET
+		
+    Endif
+
+
+Next A
+endif
