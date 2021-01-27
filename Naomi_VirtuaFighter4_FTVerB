@@ -1,0 +1,62 @@
+#---------------------------------------------------------------------
+#
+#     VIRTUA FIGHTER 4 FINAL TUNED Version B - NAOMI - DTPK Extractor
+#     
+#     by Vincent 27/01/2021
+#---------------------------------------------------------------------
+
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+
+
+Math PADDING = 0x0                    # ON by Default: How many bytes to trim from each extracted file
+
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+goto 0x0A829f00
+
+Math A = 1
+
+For A
+
+	If  CURRENT_OFFSET = ""
+	    Break
+		
+    Else
+	    FindLoc SP_OFFSET binary "\x00\x00\x00\x00\x44\x54\x50\x4B"
+		# print "DTPK OFFSET AT %SP_OFFSET|x%"
+		XMath SP_OFFSET "SP_OFFSET+0x4"
+		xmath FILENAME "SP_OFFSET-0x80"
+		goto FILENAME
+		# print "FILENAME OFFSET AT %FILENAME|x%"
+		FindLoc NAME_END binary "\x00\x00\x00\x00"
+		# print "NAME_END OFFSET AT %NAME_END|x%"
+		xmath NAME_SIZE "NAME_END-FILENAME-0x3"
+		# print "NAME_SIZE OFFSET AT %NAME_SIZE|x%"
+		goto FILENAME
+		GetDString NAME NAME_SIZE
+		goto 0x22290E
+		GetDString EXT 3
+		goto SP_OFFSET
+		get JUNK long
+		get JUNK long
+		get SIZE long
+		Xmath TARGET "SIZE + PADDING"
+		String FILENAME P "%NAME%%EXT%"
+		append
+	    Log FILENAME SP_OFFSET TARGET
+	    append
+		
+		
+    Endif
+
+
+Next A
