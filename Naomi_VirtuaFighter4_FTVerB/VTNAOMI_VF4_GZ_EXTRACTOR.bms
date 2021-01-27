@@ -1,0 +1,59 @@
+#---------------------------------------------------------------------
+#
+#     VIRTUA FIGHTER 4 FINAL TUNED Version B - NAOMI - GZ Extractor
+#     
+#     by Vincent 27/01/2021
+#---------------------------------------------------------------------
+
+
+#-----------------------------------
+# 
+#   Specify the following values: 
+#
+#-----------------------------------
+
+
+Math PADDING = 0x0                    # ON by Default: How many bytes to trim from each extracted file
+
+
+
+#-----------------------------------
+# DO NOT CHANGE ANYTHING BELOW HERE!
+#-----------------------------------
+
+goto 0x000000
+
+Math A = 1
+
+For A
+
+	If  CURRENT_OFFSET = ""
+	    Break
+		
+    Else
+	    FindLoc SP_OFFSET binary "\x1F\x8B\x08\x08"
+		# print "GZ OFFSET AT %SP_OFFSET|x%"
+		xmath FILENAME "SP_OFFSET-0x80"
+		goto FILENAME
+		# print "FILENAME OFFSET AT %FILENAME|x%"
+		FindLoc NAME_END binary "\x67\x7A\x00\x00\x00\x00\x00\x00\x00\x00"
+		# # print "NAME_END OFFSET AT %NAME_END|x%"
+		xmath NAME_SIZE "NAME_END-FILENAME"
+		# print "NAME_SIZE OFFSET AT %NAME_SIZE|x%"
+		goto FILENAME
+		GetDString NAME NAME_SIZE
+		goto SP_OFFSET
+		XMath SIZE "SP_OFFSET-0xF4"
+		goto SIZE
+		get SIZE long
+		goto SP_OFFSET
+		get JUNK long
+		Xmath TARGET "SIZE + PADDING"
+	    Log NAME SP_OFFSET TARGET
+
+		
+		
+    Endif
+
+
+Next A
