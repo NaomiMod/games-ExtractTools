@@ -1,9 +1,9 @@
-#---------------------------------------------------------------------
+#------------------------------------------------------------------------
 #
-#     VIRTUA FIGHTER 4 FINAL TUNED Version B - NAOMI - GZ Extractor
+#     VIRTUA FIGHTER 4 FINAL TUNED Version B - NAOMI - GZ Extractor V1.1
 #     
 #     by Vincent 27/01/2021
-#---------------------------------------------------------------------
+#------------------------------------------------------------------------
 
 
 #-----------------------------------
@@ -49,7 +49,9 @@ For A
 		goto SP_OFFSET
 		get JUNK long
 		Xmath TARGET "SIZE + PADDING"
-	    Log NAME SP_OFFSET TARGET
+		get ZSIZE asize
+		comtype gzip
+	    clog NAME SP_OFFSET SIZE ZSIZE
 
 		
 		
