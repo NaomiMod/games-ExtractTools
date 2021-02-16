@@ -1,0 +1,145 @@
+
+#----------------------------
+# Custom Data scanner     
+#----------------------------
+# By VincentNL 2021/02/16
+for A
+#----------------------------
+
+
+#-----------------------------------------------------------------------------
+# HOW TO USE:
+#-----------------------------------------------------------------------------
+#  Replace "EXAMPLE" with any ASCII or bytes array you want to search:
+#
+#  i.e.   "PVRT"   or   "\x50\x56\x52\x54"
+#  
+#  
+#-----------------------------------------------------------------------------
+
+
+
+FindLoc FILE_START String "PVRT"     0 ""  # Note: DO NOT REMOVE 0 "" !!
+
+
+
+
+
+#---------------
+#   OPTIONS
+#---------------
+
+
+Math TXT_LOG = 1              # Default, only lists found strings into a .txt
+                              # disable with "0" if you want to log file
+
+
+
+#--------------------
+#   FILE_LOG Options 
+#--------------------
+
+Math FILE_LOG = 0             # Logs file from offset until end of file
+                              # enable with "1" if you want to log file
+
+Math CUT_FILES = 1            # Set a limit instead logging until end of file
+Math MAX_BYTES = 0x80000      # Specify size limit for extracted files
+
+
+
+#--------------------
+#   ENTIRE_LOG Options 
+#--------------------
+
+Math ENTIRE_FILE_LOG = 0      # Logs entire file with offset in filename !COULD BE HUGE!
+                              # enable with "1" if you want to log entire file
+
+
+							  
+							  
+							  
+							  
+
+							  
+#-----------------------------
+# !!!SCRIPT START!!!
+#
+# DO NOT TOUCH ANYTHING BELOW!
+#----------------------------- 
+
+get FILE_END asize
+get name FILENAME
+
+if TXT_LOG = 1
+
+
+   If FILE_START = ""
+	Break
+    else
+	 String FILENAME P "File : %NAME%     Offset : %FILE_START|x%"	
+     set MEMORY_FILE binary FILENAME
+     String TEXT P "DATA_SCAN_LOG.txt"   
+     get SIZE asize -1
+     append
+     Log TEXT 0 size -1
+     append
+	 
+	set MEMORY_FILE binary "\x0D\x0A"
+    String TEXT P "DATA_SCAN_LOG.txt"
+    get SIZE asize -1
+    append
+    Log TEXT 0 size -1
+    append
+	GOTO FILE_START
+	get junk long
+    
+	endif
+
+
+	
+
+	
+elif FILE_LOG = 1
+
+     If FILE_START = ""
+	 Break
+     else
+
+	 String FILENAME P "%NAME%_%FILE_START|x%"
+	 
+	    if CUT_FILES = 0
+         xmath SIZE "FILE_END-FILE_START"	
+	     Log FILENAME FILE_START SIZE
+	     GOTO FILE_START
+	     get junk long
+		 
+		elif CUT_FILES = 1
+         xmath SIZE "MAX_BYTES"	
+	     Log FILENAME FILE_START SIZE
+	     GOTO FILE_START
+	     get junk long
+		endif
+	
+     endif
+
+
+
+
+elif ENTIRE_FILE_LOG = 1
+
+     if FILE_START = ""
+
+	 
+     Break
+else
+
+	 String FILENAME P "%NAME%_%FILE_START|x%"		
+	 Log FILENAME 0 FILE_END
+	 GOTO FILE_START
+	 get junk long
+	
+    endif
+endif
+
+next A
+
