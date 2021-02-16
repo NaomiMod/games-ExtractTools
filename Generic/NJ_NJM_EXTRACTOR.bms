@@ -1,0 +1,92 @@
+#----------------------------
+# NJ/NJM extractor script     
+# By VincentNL 2021/02/16
+#----------------------------
+
+
+#------------
+#  OPTIONS
+#------------
+
+Math SKIP_NJ = 0      # Change to 1 to SKIP extraction of .NJ
+Math SKIP_NJM = 1     # Change to 1 to SKIP extraction of .NJM
+
+
+
+get name filename
+get FILE_END asize
+#print "FILE_END: %FILE_END|x%"
+math a = 1
+
+if SKIP_NJ = 0    
+print "SEARCHING NINJA MODELS..."
+	
+for loop
+
+
+
+    findloc OFFSET String "\x4E\x4A\x43\x4D" 0 ""
+	if OFFSET = ""
+	   print "NO MORE NINJA MODELS FOUND!"
+	   Math A = 1
+	   goto 0x0
+	   break
+	    
+	    
+    else 
+	    goto OFFSET
+	    get JUNK long
+	    get SIZE long
+		#print "SIZE VALUE: %SIZE|x%"
+		#print "FILE_END: %FILE_END|x%"
+
+		    if SIZE < FILE_END 
+	            String filename P "%name%_%a%.nj"
+	            Xmath SIZE "SIZE+0x8" 
+	            log filename OFFSET SIZE
+	            xmath a "a+1"
+				
+				
+
+			   
+		    endif
+	
+	endif
+next loop
+
+endif
+
+if SKIP_NJM = 0  
+
+math a = 1
+
+print "SEARCHING NINJA MOTION..."
+
+    findloc OFFSET String "\x4E\x4D\x44\x4D" 0 ""
+	if OFFSET = ""
+	   print "NO MORE NINJA MOTION FOUND!"
+	   Math A = 1
+	   break
+	    
+	    
+    else 
+	    goto OFFSET
+	    get JUNK long
+	    get SIZE long
+		#print "SIZE VALUE: %SIZE|x%"
+		#print "FILE_END: %FILE_END|x%"
+
+		    if SIZE < FILE_END 
+	            String filename P "%name%_%a%.njm"
+	            Xmath SIZE "SIZE+0x8" 
+	            log filename OFFSET SIZE
+	            xmath a "a+1"
+				
+				
+
+			   
+		    endif
+	
+	endif
+next loop
+endif
