@@ -3,14 +3,14 @@
 SNR is the text format used by Rent-a-Hero No.1 for Dreamcast, `TEXT DATA` are text sentences composed by chars (uint short).
 `PARAMETER DATA` is a list of floats for positioning chars / camera location on each scene.
 
-*Please note (+ `0x40`) is the relative address to add in order to get actual offset!
+*Please note (+ `0x40`) is a relative value to add in order to get actual offset!
 
 |Address|Length (hex)|Description|
 |-------|------------|-----------|
 |0x00|	08|	MAGIC HEADER: `x53/x43/x45/x4E/x41/x52/x49/x4F`|         
 |0x08|	04|	TEXT DATA / END OFFSET (+ `0x40`)|
 |0x0C|	04|	PARAMETER DATA SIZE| 
-|0x10|	04|	TEXT TOTAL NUMBER|
+|0x10|	04|	TEXT SENTENCES TOTAL NUMBER|
 |0x14|	04|	PARAMETER TOTAL ENTRIES|
 |0x18|	04|	UNK|
 |0x1C|	04|	UNK|
