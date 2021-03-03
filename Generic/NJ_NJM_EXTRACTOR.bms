@@ -1,5 +1,5 @@
 #----------------------------
-# NJ/NJM extractor script     
+# NJ/NJM/NJL extractor script     
 # By VincentNL 2021/02/16
 #----------------------------
 
@@ -10,7 +10,7 @@
 
 Math SKIP_NJ = 0      # Change to 1 to SKIP extraction of .NJ
 Math SKIP_NJM = 0     # Change to 1 to SKIP extraction of .NJM
-
+Math SKIP_NJL = 0      # Change to 1 to SKIP extraction of POF END
 
 
 
@@ -30,8 +30,8 @@ for loop
 	if OFFSET = ""
 	   print "NO MORE NINJA MODELS FOUND!"
 	   
-	   if SKIP_NJM = 0
-	   print "SEARCHING NINJA MOTION..."
+	   if SKIP_NJL = 0
+	   print "SEARCHING NINJA LIGHT SCENE..."
 	   endif
 	   
 	   goto 0x0
@@ -71,6 +71,63 @@ for loop
 next loop
 
 endif
+
+
+
+if SKIP_NJL = 0    
+
+for loop
+
+
+
+    findloc OFFSET String "\x4E\x4A\x54\x4C" 0 ""
+	if OFFSET = ""
+	   print "NO MORE NINJA LIGHT SCENE FOUND!"
+	   
+	   if SKIP_NJM = 0
+	   endif
+	   
+	   goto 0x0
+	   math a = 1
+	   break
+
+	    
+	    
+    else 
+	    goto OFFSET
+	    get JUNK long
+	    get SIZE long
+		xMath POF "OFFSET+SIZE+0x8"
+		Math POF += 0x4
+		goto POF
+		get POF_SIZE long
+		#print "POF SIZE: %POF_SIZE|x%"
+		Xmath POF_END "SIZE+POF_SIZE"
+		#print "POF END: %POF_END|x%"
+		xMath SIZE "POF_END+0x10"
+		#print "SIZE VALUE: %SIZE|x%"
+		#print "FILE_END: %FILE_END|x%"
+
+
+		    if SIZE < FILE_END 
+	            String filename P "%name%_%a%.njl" 
+	            log filename OFFSET SIZE
+	            xmath a "a+1"
+				
+				
+				
+
+			   
+		    endif
+	
+	endif
+next loop
+
+endif
+
+
+
+
 
 if SKIP_NJM = 0  
 
@@ -114,3 +171,4 @@ if SKIP_NJM = 0
 	endif
 next loop
 endif
+
