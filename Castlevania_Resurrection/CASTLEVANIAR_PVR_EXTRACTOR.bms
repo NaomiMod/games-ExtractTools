@@ -1,0 +1,53 @@
+#----------------------------
+# Castlevania Resurrection PVR extractor script     
+# By VincentNL 2021/04/27
+#----------------------------
+
+get name filename
+get FILE_END asize
+
+Math a = 1
+
+# print "SEARCHING PVR..."
+for loop
+
+
+    findloc OFFSET string "PVRT" 0 ""
+	if OFFSET = ""
+	   break
+	    
+	    
+    else 
+	
+	    goto OFFSET
+	    xmath PVRNAME_OFF "OFFSET-0x28"
+		findloc NAME_END string "\xCC" 0 ""
+		Xmath PVRNAME_SIZE "NAME_END-PVRNAME_OFF"
+
+		goto PVRNAME_OFF
+		GetDString NAME PVRNAME_SIZE
+
+		
+	    goto OFFSET
+		
+	    get JUNK long
+	    get SIZE long
+		get JUNK short
+		get TEST short
+		xmath TEST2 "OFFSET+SIZE"
+		#print "TEST VALUE: %TEST%"
+
+		
+		    if TEST = 0 && SIZE < FILE_END && TEST2 < FILE_END
+		
+	            String filename P "%name%_%a%.pvr"
+	            Xmath SIZE "SIZE+0x8" 
+	            log filename OFFSET SIZE
+	            xmath a "a+1"
+			   
+		    endif
+	
+	endif
+
+
+next loop
