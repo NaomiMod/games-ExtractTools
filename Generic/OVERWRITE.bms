@@ -1,0 +1,21 @@
+#---------------------
+# QBMS data overwrite
+#
+# By VincentNL 12/05/2021
+#
+# Credits to DKDave & Aluigi
+#----------------------------
+
+Open FDSE "Source.bin" 9                   # Open source file you want to overwrite data in, refer as "9"
+get S_SIZE asize 9                         # Get source file total size as S_SIZE
+get I_SIZE asize                           # Get input file total size as I_SIZE  
+Log MEMORY_FILE 0 S_SIZE 9                 # Place the whole source file in MEMORY_FILE 
+                                           
+                                                                                    
+goto 0x20 MEMORY_FILE                      # Which offset to store input file
+append 1                                    
+log MEMORY_FILE 0 I_SIZE                   # Input file starting offset & size   
+append                                     
+                                             
+                                           	                         
+log NEW.bin 0 S_SIZE MEMORY_FILE           # Log to new file                 
