@@ -26,10 +26,11 @@ for loop
 	    get JUNK long
 	    get SIZE long
 		get JUNK short
-		get TEST short
+		#get TEST short
 		#print "TEST VALUE: %TEST%"
 
-		    if TEST = 0 && SIZE < FILE_END
+		    #if TEST = 0 && SIZE < FILE_END
+		    if SIZE < FILE_END
 	            String filename P "%name%_%a%.pvp"
 	            Xmath SIZE "SIZE+0x8" 
 	            log filename OFFSET SIZE
