@@ -58,7 +58,7 @@ for loop
 
 
 		    if SIZE < FILE_END 
-	            String filename P "%name%_%a%.nj" 
+	            String filename P "%name%_%OFFSET%.nj" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
 				
@@ -112,7 +112,7 @@ for loop
 
 
 		    if SIZE < FILE_END 
-	            String filename P "%name%_%a%.njl" 
+	            String filename P "%name%_%OFFSET%.njl" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
 				
@@ -166,7 +166,7 @@ for loop
 
 
 		    if SIZE < FILE_END 
-	            String filename P "%name%_%a%.nmd" 
+	            String filename P "%name%_%OFFSET%.nmd" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
 				
@@ -217,7 +217,7 @@ if SKIP_NJM = 0
 
 
 		    if SIZE < FILE_END 
-	            String filename P "%name%_%a%.njm" 
+	            String filename P "%name%_%OFFSET%.njm" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
 				
