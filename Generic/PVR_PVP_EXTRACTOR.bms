@@ -1,19 +1,21 @@
 #----------------------------
 # PVR/PVP extractor script     
-# By VincentNL 2021/02/06
+# By VincentNL 2021/08/16
 #----------------------------
 
 get name filename
 get FILE_END asize
 math a = 1
+goto 0x0
     
-print "SEARCHING PVP..."
+#print "SEARCHING PVP..."
 	
 for loop
 
 
 
-    findloc OFFSET string "PVPL" 0 ""
+    findloc OFFSET string "\x50\x56\x50\x4C" 0 ""
+	
 	if OFFSET = ""
 	   #print "NO MORE PVP FOUND!"
 	   Math A = 1
@@ -22,6 +24,8 @@ for loop
 	    
 	    
     else 
+	
+	    #print "Found at OFFSET: "%OFFSET|x%" 
 	    goto OFFSET
 	    get JUNK long
 	    get SIZE long
@@ -29,9 +33,8 @@ for loop
 		#get TEST short
 		#print "TEST VALUE: %TEST%"
 
-		    #if TEST = 0 && SIZE < FILE_END
 		    if SIZE < FILE_END
-	            String filename P "%name%_%a%.pvp"
+	            String filename P "%name%_%OFFSET%.pvp"
 	            Xmath SIZE "SIZE+0x8" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
@@ -40,11 +43,12 @@ for loop
 		    endif
 	
 	endif
+	
 next loop
 
 Math a = 1
 
-print "SEARCHING PVR..."
+#print "SEARCHING PVR..."
 for loop2
 
 
@@ -65,7 +69,7 @@ for loop2
 		
 		    if TEST = 0 && SIZE < FILE_END && TEST2 < FILE_END
 		
-	            String filename P "%name%_%a%.pvr"
+	            String filename P "%name%_%OFFSET%.pvr"
 	            Xmath SIZE "SIZE+0x8" 
 	            log filename OFFSET SIZE
 	            xmath a "a+1"
@@ -76,4 +80,3 @@ for loop2
 
 
 next loop2
-
