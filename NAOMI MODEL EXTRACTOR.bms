@@ -1,12 +1,14 @@
 #----------------------------------------------------------------------
-# NaomiLib | Models Extractor Ver 1.1 
+# NaomiLib | Models Extractor Ver 1.2
 #
 # *Script by Vincent
 #
 #
-# Credits: DKDave & Chrrox for their awesome input!
+# Credits: DKDave & Chrrox for their awesome QBMS input!
 # 
 #----------------------------------------------------------------------
+get XXX FILENAME
+#print "%NAME%"
 
 Math MVAR = 0
 Math A = 1 #Filename number
@@ -17,7 +19,7 @@ if MVAR = 0
       FindLoc FILE_START String "\x01\x00\x00\x00\x01\x00\x00\x00" 0 "" 
       If FILE_START == ""
           Math MVAR = 1
-		  print "MAGIC TYPE A NOT FOUND!"
+		  #print "MAGIC TYPE A NOT FOUND!"
       endif
 
 endif
@@ -26,7 +28,7 @@ if MVAR = 1
       FindLoc FILE_START String "\x01\x00\x00\x00\x03\x00\x00\x00" 0 "" 
       If FILE_START == ""
           Math MVAR = 2
-		  print "MAGIC TYPE B NOT FOUND!"
+		  #print "MAGIC TYPE B NOT FOUND!"
       endif
 
 	  
@@ -36,12 +38,23 @@ if MVAR = 2
       FindLoc FILE_START String "\x01\x00\x00\x00\x05\x00\x00\x00" 0 "" 
       If FILE_START == ""
           Math MVAR = 3
-		  print "MAGIC TYPE C NOT FOUND!"
+		  #print "MAGIC TYPE C NOT FOUND!"
       endif
 	  	  
 endif
 
 if MVAR = 3
+      FindLoc FILE_START String "\x00\x00\x00\x00\x05\x00\x00\x00" 0 "" 
+      If FILE_START == ""
+          Math MVAR = 4
+		  #print "MAGIC TYPE D NOT FOUND!"
+      endif
+	  	  
+endif
+
+
+
+if MVAR = 4
 		  print "MODELS NOT FOUND!"
 
 	  break
@@ -73,6 +86,10 @@ FindLoc MODEL_START String "\x01\x00\x00\x00\x05\x00\x00\x00" 0 ""
 endif
 
 if MVAR = 3
+FindLoc MODEL_START String "\x00\x00\x00\x00\x05\x00\x00\x00" 0 ""
+endif
+
+if MVAR = 4
 break
 endif
 
@@ -95,7 +112,9 @@ Else
      #------------------------ 
      # CHECK IF NAOMILIB MODEL
      #------------------------
-	 
+	 Xmath MODEL_TEST "MODEL_START + 0x1B"
+	 goto MODEL_TEST
+	 get TEST byte
      XMath MODEL_CHECK "MODEL_START + 0x68"
      goto MODEL_CHECK
      get CHECK_VALUE long
@@ -103,7 +122,7 @@ Else
 		 
 		
 		 
-		If CHECK_VALUE > 0x09 && CHECK_VALUE <= 0x01FF   # If value is in range
+		If CHECK_VALUE > 0x09 && CHECK_VALUE <= 0x01FF && TEST >= 0x80 && TEST <= 0x82   # If value is in range
          
          #--------------------
          # YES! NAOMI LIB MODEL
@@ -189,13 +208,16 @@ Else
 			 Xmath MODEL_SIZE "MESH_END-MODEL_START"
              
 			 if MVAR = 0
-             String NAME P "MODEL_A_%A%.bin"
+             String NAME P "%XXX%_MODEL_%A%.bin"
 			 endif
 			 if MVAR = 1
-             String NAME P "MODEL_B_%A%.bin"
+             String NAME P "%XXX%_MODEL_%A%.bin"
 			 endif
 			 if MVAR = 2
-             String NAME P "MODEL_C_%A%.bin"
+             String NAME P "%XXX%_MODEL_%A%.bin"
+			 endif
+			 if MVAR = 3
+             String NAME P "%XXX%_MODEL_%A%.bin"
 			 endif
 			 
 		     log NAME MODEL_START MODEL_SIZE     # Log the model with detected meshes so far
@@ -210,8 +232,3 @@ Else
 Endif
 
 Next LOOP1
-
-
-
-
-
