@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------
-# NaomiLib | Models Extractor Ver 1.2
+# NaomiLib | Models Extractor Ver 1.3
 #
-# *Script by Vincent
+# *Script by VincentNL
 #
 #
 # Credits: DKDave & Chrrox for their awesome QBMS input!
@@ -52,9 +52,18 @@ if MVAR = 3
 	  	  
 endif
 
-
-
 if MVAR = 4
+      FindLoc FILE_START String "\x00\x00\x00\x00\x01\x00\x00\x00" 0 "" 
+      If FILE_START == ""
+          Math MVAR = 5
+		  #print "MAGIC TYPE E NOT FOUND!"
+      endif
+	  	  
+endif
+
+
+
+if MVAR = 5
 		  print "MODELS NOT FOUND!"
 
 	  break
@@ -90,6 +99,10 @@ FindLoc MODEL_START String "\x00\x00\x00\x00\x05\x00\x00\x00" 0 ""
 endif
 
 if MVAR = 4
+FindLoc MODEL_START String "\x00\x00\x00\x00\x01\x00\x00\x00" 0 ""
+endif
+
+if MVAR = 5
 break
 endif
 
@@ -98,11 +111,11 @@ endif
 #   MAGIC A TYPE
 #-------------------------------------
 
-If MODEL_START == "" && MVAR = 3
+If MODEL_START == "" && MVAR = 4
 break
 endif
 
-If MODEL_START == "" && MVAR != 3
+If MODEL_START == "" && MVAR != 4
 
      goto 0x0
      Xmath MVAR "MVAR + 1" 
@@ -207,18 +220,10 @@ Else
 		     Xmath MESH_END "MESH_END+8"     # Add endstring 8 bytes
 			 Xmath MODEL_SIZE "MESH_END-MODEL_START"
              
-			 if MVAR = 0
+
              String NAME P "%XXX%_MODEL_%A%.bin"
-			 endif
-			 if MVAR = 1
-             String NAME P "%XXX%_MODEL_%A%.bin"
-			 endif
-			 if MVAR = 2
-             String NAME P "%XXX%_MODEL_%A%.bin"
-			 endif
-			 if MVAR = 3
-             String NAME P "%XXX%_MODEL_%A%.bin"
-			 endif
+
+
 			 
 		     log NAME MODEL_START MODEL_SIZE     # Log the model with detected meshes so far
 			 XMath A "A+1"
