@@ -1,0 +1,43 @@
+#---------------------------
+# AFS Unpacker v1.0 
+#
+# by VincentNL
+#---------------------------
+
+get junk long
+get FILES_NUMBER long
+get NAMES_OFFSET long
+Math NAMES_OFFSET -= 0x8
+goto NAMES_OFFSET
+get NAMES_OFFSET long
+goto NAMES_OFFSET
+savepos NAMES_OFFSET
+goto 0x8
+
+savepos FILE_POINTER
+
+ for Loop
+
+	if FILES_NUMBER > 0
+	
+     goto FILE_POINTER
+     get FILE_START long
+
+     get FILE_SIZE long
+     goto NAMES_OFFSET
+
+     getCT FILENAME String 0x00
+   
+     log FILENAME FILE_START FILE_SIZE
+	 Math NAMES_OFFSET += 0x30
+	 Math FILE_POINTER += 0x8
+	 Math FILES_NUMBER -= 1 
+	 
+	else
+	
+	  break
+	  
+    endif
+	 
+	 
+ Next Loop
