@@ -10,8 +10,8 @@
 
 Math SKIP_NJ = 0      # Change to 1 to SKIP extraction of .NJ
 Math SKIP_NJM = 0     # Change to 1 to SKIP extraction of .NJM
-Math SKIP_NJL = 0      # Change to 1 to SKIP extraction of POF END
-Math SKIP_NMD = 0      # Change to 1 to SKIP extraction of POF END
+Math SKIP_NJL = 0      # Change to 1 to SKIP extraction of .NJL
+Math SKIP_NMD = 0      # Change to 1 to SKIP extraction of .NMD
 
 
 
