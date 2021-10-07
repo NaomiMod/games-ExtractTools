@@ -37,7 +37,7 @@ Each texture header is split in 3 chunks 0x4 bytes long each:
 |0x04|	0x04| PVR Pixel type |
 |0x08|	0x04| SPECIFIED OFFSET - BASE ADDRESS|
 
-* Please note base address is always the first model pointer
+* Please note base address is always the first texture pointer
 i.e.
 First pointer value is `0x0000400C` , the real address is calculated:
 `0x0000400C - 0x0000400C`
