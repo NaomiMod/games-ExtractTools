@@ -1,0 +1,108 @@
+#----------------------------------------------------------------------
+# InitD3-REVA | GENERIC files Extractor Ver 1.0  
+# ( DTPK, POL , LLCR , DEF )
+# *Script by VincentNL
+# 
+#----------------------------------------------------------------------
+
+get NAME BASENAME
+String FILENAME P "%NAME%"	
+get SIZE asize
+Xmath SIZE "SIZE-0x20"
+goto 0x1c                   # Uncompressed size
+get ZSIZE long
+Math OFFSET = 0x20          # Start of data
+comtype zlib
+Clog MEMORY_FILE OFFSET SIZE ZSIZE
+
+
+
+
+if ZSIZE = 0
+break
+endif
+
+get CHECK1X short -1
+get CHECK2X short -1
+
+
+
+goto 0x0 -1
+
+get CHECK1 long -1
+get CHECK2 long -1
+get CHECK3 long -1
+
+
+
+XMath LASTFLOAT "ZSIZE - 0x4"
+goto LASTFLOAT -1
+get LASTFLOAT1 short -1
+get LASTFLOAT2 short -1
+
+
+goto 0x0 -1
+
+if CHECK1X = 19505 && CHECK2X = 21059
+get size asize -1
+String FILENAME P "%NAME%.llcr"
+log FILENAME 0 size -1
+
+
+elif CHECK1X = 21572 && CHECK2X = 19280
+get size asize -1
+String FILENAME P "%NAME%.snd"
+log FILENAME 0 size -1
+
+
+elif CHECK1 = 256 && CHECK2 = 0x3
+get size asize -1
+String FILENAME P "%NAME%.pol"
+log FILENAME 0 size -1
+
+
+elif CHECK1 = 256 && CHECK2 = 0x1
+get size asize -1
+String FILENAME P "%NAME%.pol"
+log FILENAME 0 size -1
+
+
+elif CHECK1 = 256 && CHECK2 = 0x7
+get size asize -1
+String FILENAME P "%NAME%.pol"
+log FILENAME 0 size -1
+
+
+elif CHECK1 = 256 && CHECK2 = 0x11
+get size asize -1
+String FILENAME P "%NAME%.pol"
+log FILENAME 0 size -1
+
+elif CHECK1 = 256 && CHECK2 = 0x0b
+get size asize -1
+String FILENAME P "%NAME%.pol"
+log FILENAME 0 size -1
+
+
+elif CHECK1 < 255 && CHECK1 > 0 && CHECK2 < 255 && CHECK2 > 0 && CHECK3 < 255 && CHECK3 > 0
+get size asize -1
+String FILENAME P "%NAME%.mot"
+log FILENAME 0 size -1
+
+elif ZSIZE = 0x4800 && LASTFLOAT1 = 65535 && LASTFLOAT2 = 65535
+get size asize -1
+String FILENAME P "%NAME%.def"
+log FILENAME 0 size -1
+
+elif ZSIZE = 0x1DED10 && CHECK1X = 23191 && CHECK2X = 17195
+get size asize -1
+String FILENAME P "%NAME%.def"
+log FILENAME 0 size -1
+
+Else
+
+get size asize -1
+String FILENAME P "%NAME%.bin"
+log FILENAME 0 size -1
+
+endif
