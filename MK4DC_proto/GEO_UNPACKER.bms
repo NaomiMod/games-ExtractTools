@@ -1,0 +1,80 @@
+#----------------------------
+# .GEO unpacker script     
+# By VincentNL 2021/12/06
+# 
+#----------------------------
+
+
+# Please note extracted .gfx requires MK4S tool for decompressing to bmp:
+#
+# https://www.mksecrets.net/forums/eng/download/file.php?id=448&sid=745c65a02ceffee601d8ebc0c846defe
+
+
+
+get name basename
+goto 0x4
+get MODEL_SIZE long
+get FILE_SIZE long
+goto MODEL_SIZE
+get JUNK long
+savepos UNK_OFFSET
+
+String FILENAME_MODEL P "%name%_Model.bin"	
+XMath UNK_SIZE "(FILE_SIZE-0x4)-MODEL_SIZE"
+Math MODEL_SIZE -= 0x8
+
+
+log FILENAME_MODEL 0xc MODEL_SIZE
+set MEMORY_FILE binary 
+log MEMORY_FILE UNK_OFFSET UNK_SIZE
+
+
+
+get maxsize asize -1
+
+goto 0x0 -1
+get total long -1
+#print "total gfx = %total%"
+math num = 1
+
+for loop2
+
+    if total != 0
+    
+       get junk long -1
+       savepos texstart -1
+       #print "texstart = %texstart|x%"
+       get size long -1
+       #print "size = %size|x%"
+       math size += 0x4
+       #print "texend = %size|x%"
+       String fname P "%name%_%num%.gfx"
+	   
+	   if total = 1
+	   
+	       xmath size "maxsize-texstart"
+		   log fname texstart size -1
+		   break
+		   
+	   else
+	   
+	       log fname texstart size -1
+           xmath nextpos "texstart+size"
+           #print "nextpos = %nextpos|x%" 
+		   goto nextpos -1 
+           math num += 1
+           math total -= 1
+	   
+	   
+	   endif
+	   
+  
+	   
+    else
+    
+     break
+       
+    endif
+
+next loop2
+
