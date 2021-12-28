@@ -1,0 +1,77 @@
+#----------------------------------------------------------------------
+# .PVP TO JASC .PAL CONVERTER 1.0
+#
+# *Script by VincentNL  28/12/2021
+#
+#
+# Credits: DKDave ( QBMS bit >> r5g5g5 )& Joschka ( bit component math ) —  for their awesome input!
+# 
+#----------------------------------------------------------------------
+
+get name basename
+print "PVP File: %name%"
+goto 0x10
+get size asize
+math size -= 0x10
+xmath PAL_ENTRIES "size/2"
+print "Total palette entries = %PAL_ENTRIES%"
+print "----------------"
+Math counter = 1
+
+set MEMORY_FILE1 binary "\x4A\x41\x53\x43\x2D\x50\x41\x4C\x0D\x0A\x30\x31\x30\x30\x0D\x0A"
+get mem1size asize -1
+set MEMORY_FILE2 binary ""
+log MEMORY_FILE2 0 mem1size -1
+set MEMORY_FILE1 binary PAL_ENTRIES
+get mem1size asize -1
+append
+log MEMORY_FILE2 0 mem1size -1
+append
+set MEMORY_FILE1 binary "\x0D\x0A"
+get mem1size asize -1
+append
+log MEMORY_FILE2 0 mem1size -1
+append
+
+
+
+for loop
+
+
+       if counter <= PAL_ENTRIES
+     
+            Get COLOUR Short
+           #print "ENTRY %counter%"
+            XMath RED "(COLOUR & 0x1f) << 3"
+            XMath GREEN "(COLOUR & 0x3e0) >> 2"
+            XMath BLUE "(COLOUR & 0x7c00) >> 7"
+            String ENTRY P "%RED% %GREEN% %BLUE%"
+           #print "RGB: %ENTRY%"
+           #print "----------------"
+			set MEMORY_FILE1 binary ENTRY
+            get mem1size asize -1
+            append
+            log MEMORY_FILE2 0 mem1size -1
+            append
+			set MEMORY_FILE1 binary "\x0D\x0A"
+            get mem1size asize -1
+            append
+            log MEMORY_FILE2 0 mem1size -1
+            append
+			
+            math counter += 1
+      
+       else
+	   
+	        get mem2size asize -2
+            String filename P "%name%.pal"
+            log filename 0 mem2size -2
+
+            break
+
+         endif
+		 
+
+next loop
+
+
