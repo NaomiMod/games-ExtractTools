@@ -1,0 +1,187 @@
+#-----------------------------------------------
+#
+#  Naomi Model SDK to .bin
+#  By VincentNL 13/05/2022 
+#
+#-----------------------------------------------
+
+get name basename
+String name P "%name%.bin"
+savepos startpos = 0x0
+math remove_start = 0x0
+get size asize
+
+set memory_file ""
+set memory_file2 ""
+
+
+#-----------------------------------------------
+# clean header garbage before model data
+#-----------------------------------------------    
+
+
+findloc model_start binary "\x5E\x1C\xFD\x80\x00\x00\x00\x00\xF4" 0 ""
+math model_start += 0x9
+#print "start of model at: %model_start|x%"
+math startpos = model_start
+goto startpos
+
+
+#-----------------------------------------------
+# 1st Clean Loop
+#-----------------------------------------------  
+
+for i
+
+findloc test_offset binary "\x80\x00\x00" 0 ""
+#print "Found at %test_offset|x%"
+
+      if test_offset != ""          # if found
+	  
+
+         xmath test_f4 "test_offset+0x5"
+         goto test_f4
+         get byteval byte
+	#	 print "F4 test: %byteval|x%" 
+		 
+	    	 if byteval = 0xf4 || byteval = 0x04 || byteval = 0xb0 || byteval = 0xc4
+			 
+		    	 
+		    	#print "F4 test: %byteval|x%" 
+				 
+				 #-----------------------------------------------
+				 # logs from past address until start of garbage
+	    		 #-----------------------------------------------   
+				 
+                 xmath garbage_start "test_offset-0x3"
+		    	 xmath logsize "garbage_start-startpos"
+				 
+ 		    	 append
+		    	 log memory_file startpos logsize
+		    	 append
+
+				 savepos startpos
+
+
+	    	  endif
+
+      else
+	  
+	   	 xmath rest_of_file "size-startpos"
+		 
+		 append
+		 log MEMORY_FILE startpos rest_of_file
+		 append
+		 
+         break
+         
+      endif
+
+next i
+
+
+goto 0x0 -1
+savepos startpos -1
+get size asize -1
+
+
+#-----------------------------------------------
+# 2nd Clean Loop
+#-----------------------------------------------  
+
+
+for j
+
+findloc test_offset binary "\x9A\x07\x00\x00\x00\x00" -1 ""
+#print "loop2 string found at %test_offset|x%"
+      if test_offset != ""          # if found
+	  
+
+				 #-----------------------------------------------
+				 # logs from past address until start of garbage
+	    		 #-----------------------------------------------   
+				 
+                 xmath garbage_start "test_offset-0x1"
+				 xmath garbage_end "test_offset+0x6"
+		    	 xmath logsize "garbage_start-startpos"
+				 
+ 		    	 append
+		    	 log memory_file2 startpos logsize -1
+		    	 append
+				 
+                 goto garbage_end -1
+				 savepos startpos -1
+
+      else
+	  
+	   	 xmath rest_of_file "(size-0x4)-startpos"
+		 
+		 append
+		 log MEMORY_FILE2 startpos rest_of_file -1
+		 append
+		 
+		 get memsize asize -2
+ 		 log MEMORY_FILE 0 memsize -2
+
+         break
+         
+      endif
+
+
+next j
+
+set memory_file2 ""
+goto 0x0 -1
+savepos startpos -1
+get size asize -1
+
+#-----------------------------------------------
+# 3rd Clean Loop
+#-----------------------------------------------  
+
+
+for k
+
+findloc test_offset binary "\x18\x08\x10\x08\x08\x08\x00\x08" -1 ""
+#print "loop2 string found at %test_offset|x%"
+      if test_offset != ""          # if found
+	  
+
+				 #-----------------------------------------------
+				 # logs from past address until start of garbage
+	    		 #-----------------------------------------------   
+				 
+                 xmath garbage_start "test_offset-0x8"
+				 xmath garbage_end "test_offset+0xC"
+		    	 xmath logsize "garbage_start-startpos"
+				 
+ 		    	 append
+		    	 log memory_file2 startpos logsize -1
+		    	 append
+				 
+                 goto garbage_end -1
+				 savepos startpos -1
+
+      else
+	  
+	   	 xmath rest_of_file "(size-0x4)-startpos"
+		 
+		 append
+		 log MEMORY_FILE2 startpos rest_of_file -1
+		 append
+		 
+		 get memsize asize -2
+ 		 log name 0 memsize -2
+
+         break
+         
+      endif
+
+
+next k
+
+
+
+
+
+
