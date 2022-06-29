@@ -33,37 +33,57 @@ goto startpos
 
 for i
 
-findloc test_offset binary "\x80\x00\x00" 0 ""
-#print "Found at %test_offset|x%"
+findloc test_offset binary "\x80\x00" 0 ""
+print "Found at %test_offset|x%"
 
       if test_offset != ""          # if found
 	  
 
-         xmath test_f4 "test_offset+0x5"
-         goto test_f4
-         get byteval byte
-	#	 print "F4 test: %byteval|x%" 
+
+         goto test_offset
+		 get junk short
+		 get test_2 byte
 		 
-	    	 if byteval = 0xf4 || byteval = 0x04 || byteval = 0xb0 || byteval = 0xc4
-			 
-		    	 
-		    	#print "F4 test: %byteval|x%" 
-				 
-				 #-----------------------------------------------
-				 # logs from past address until start of garbage
-	    		 #-----------------------------------------------   
-				 
-                 xmath garbage_start "test_offset-0x3"
-		    	 xmath logsize "garbage_start-startpos"
-				 
- 		    	 append
-		    	 log memory_file startpos logsize
-		    	 append
+		 if test_2 <= 2
+		 
+		 
+             xmath test_f4 "test_offset+0x5"
+             goto test_f4
+             get byteval byte
+    	 	# print "F4 test: %byteval|x%" 
+    		 
+    	    	if byteval = 0xf4 || byteval = 0x04 || byteval = 0xb0 || byteval = 0xc4 || byteval = 0x88 || byteval = 0x34 || byteval = 0x28 || byteval = 0xd8
+				    Math clean_flag = 1
+				
+				elif byteval = 0x0c || byteval = 0xec || byteval = 0x3c || byteval = 0x1c || byteval = 0x08 || byteval = 0x58
+				    Math clean_flag = 1
+			
+				endif
+				
+				if clean_flag = 1
+    			 
+    		    	 
+    		       #print "F4 test: %byteval|x%" 
+    			   
+    			   #-----------------------------------------------
+    			   # logs from past address until start of garbage
+    	    	   #-----------------------------------------------   
+    			   
+                   xmath garbage_start "test_offset-0x3"
+    		       xmath logsize "garbage_start-startpos"
+    			   
+     		       append
+    		       log memory_file startpos logsize
+    		       append
+				  
+    			   savepos startpos
+				  
 
-				 savepos startpos
-
-
-	    	  endif
+	    	    endif
+				
+				Math clean_flag = 0
+			  
+		  endif
 
       else
 	  
@@ -146,14 +166,38 @@ findloc test_offset binary "\x18\x08\x10\x08\x08\x08\x00\x08" -1 ""
 #print "loop2 string found at %test_offset|x%"
       if test_offset != ""          # if found
 	  
+#                xmath test_3 "test_offset-0x6"
+#				 goto test_3 -1
+#				 get test3 long -1
+				 
+				 
+
+
+				 
+#				 if test3 = 0x34FF
+#				 	
+#					print "test3: %test3|x%"
+#				 
+#				   xmath garbage_start "test_offset-0x5"
+#                
+#               else
+#				 
+#				   xmath garbage_start "test_offset-0x8"
+#			
+#                 endif
+
 
 				 #-----------------------------------------------
 				 # logs from past address until start of garbage
 	    		 #-----------------------------------------------   
-				 
-                 xmath garbage_start "test_offset-0x8"
-				 xmath garbage_end "test_offset+0xC"
+		 
+
+				 xmath garbage_start "test_offset-0x8"
+				 xmath garbage_end "test_offset+0xD"
 		    	 xmath logsize "garbage_start-startpos"
+				 
+				 print "garbage_start:%garbage_start|x%,garbage_end:%garbage_end|x%"
+				 
 				 
  		    	 append
 		    	 log memory_file2 startpos logsize -1
@@ -163,8 +207,16 @@ findloc test_offset binary "\x18\x08\x10\x08\x08\x08\x00\x08" -1 ""
 				 savepos startpos -1
 
       else
-	  
+	   
 	   	 xmath rest_of_file "(size-0x4)-startpos"
+		 
+		 if rest_of_file < 0
+		 
+		 print "negative!!!!"
+		       xmath rest_of_file "size-startpos"
+
+		 endif
+		 
 		 
 		 append
 		 log MEMORY_FILE2 startpos rest_of_file -1
@@ -179,9 +231,3 @@ findloc test_offset binary "\x18\x08\x10\x08\x08\x08\x00\x08" -1 ""
 
 
 next k
-
-
-
-
-
-
