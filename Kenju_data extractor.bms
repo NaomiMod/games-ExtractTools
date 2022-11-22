@@ -1,0 +1,34 @@
+math var = 0x96000
+math start = 0x960c8
+math ttl_files = 0x154
+math curfile = 1
+
+for loop
+
+if curfile > ttl_files
+     break
+	 
+else
+
+    goto start
+	savepos curpos
+    get foffset long
+	math foffset += var
+	get fsize long
+	get name string
+	print "%name%"
+	log name foffset fsize
+	goto start
+	math start += 0x40
+	
+	print "File offset= %foffset|x%"
+	print "----------------------"
+	
+math curfile += 1
+	
+
+endif
+
+
+
+next loop
