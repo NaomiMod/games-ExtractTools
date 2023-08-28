@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------
 # Dead or Alive 2 (Dreamcast) .CHR Unpacker 
 #
-# *Script by VincentNL  06/10/2021
+# *Script by VincentNL  28/08/2023
 #
 #
 #----------------------------------------------------------------------
@@ -10,9 +10,8 @@
 
 set MEMORY_FILE2 binary ""
 set MEMORY_FILE3 binary ""
-set MEMORY_FILE4 binary "\x47\x42\x49\x58\x08\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x50\x56\x52\x54"    # GBIX+PVR header
+set MEMORY_FILE4 binary "\x50\x56\x52\x54"    # PVR header
 set MEMORY_FILE5 binary ""
-
 
 get name basename
 String pvr_container P "%name%.bin"    # 
@@ -22,9 +21,7 @@ get binsize asize 1
 goto 0x10
 get total_tex long   #total textures
 goto 0x8
-get header_offset long  #where size, pixel data and lenght are stored
-
-
+get header_offset long  #where size, pixel data and length are stored
 
 xmath base_address "header_offset+0x8"
 goto base_address
@@ -32,97 +29,93 @@ get base_address long
 
 goto header_offset
 
-Math A = 1
+Math A = 0
+XMath B "total_tex-1"
 
-
+print  "--------TEXTURE %A%/%B%:"
 
 for loop
+    if A < B
+        #print  "--------TEXTURE %A%:"
+        savepos currentpos
+        get tex_size long
 
+        log MEMORY_FILE2 currentpos 0x4
+        math currentpos += 0x4
 
-	 #print  "--------TEXTURE %A%:"
-     savepos currentpos
-     get tex_size long
-     
-     #print "tex size: %tex_size|x%"
-     
+        get pixel_type long
 
-     log MEMORY_FILE2 currentpos 0x4
-     math currentpos += 0x4
+        log MEMORY_FILE3 currentpos 0x4
+        math currentpos += 0x4
 
-     
-     get pixel_type long
-     #print "pixel_type: %pixel_type|x%"
-     
+        get PVR_start long
+        Math PVR_start -= base_address
+        #print "PVR_start: %PVR_start|x%"
 
-     log MEMORY_FILE3 currentpos 0x4
-     math currentpos += 0x4
+        xmath nextpos "currentpos +0xc"
+        goto nextpos
+        get PVR_end long
+        Math PVR_end -= base_address
+        Xmath PVR_size "PVR_end-PVR_start"
 
-     
-     
-     get PVR_start long
-     Math PVR_start -= base_address
-     #print "PVR_start: %PVR_start|x%"
-       
-	    if A < total_tex
-	   
-	   
-           xmath nextpos "currentpos +0xc"
-           #print "next PVR start: %nextpos|x%"
-           
-           goto nextpos
-           get PVR_end long
-           
-           Math PVR_end -= base_address
-           #print "PVR_end: %PVR_end|x%"
-           
-           Xmath PVR_size "PVR_end-PVR_start"
-           #print "PVR_size: %PVR_size|x%"
-		   
-		   #print  "-----------------"
-           math nextpos -= 0x8
-           goto nextpos
-           math currentpos = nextpos
-		   
+        math nextpos -= 0x8
+        goto nextpos
+        math currentpos = nextpos
 
-	    else
-		   
-		   Xmath PVR_size "binsize-PVR_start"
-		   #print "PVR_size: %PVR_size|x%"
+        xMath PVR_size_val "PVR_size+0x8"
+    else
+        #print  "--------TEXTURE %A%:"
+        xmath PVR_start "PVR_size+PVR_start"
+        #print "PVR start: %PVR_start|x%" 
+        savepos currentpos
+        get tex_size long
+        #print "tex size: %tex_size|x%"
 
-		   break
+        log MEMORY_FILE2 currentpos 0x4
+        math currentpos += 0x4
 
-		endif
-           
-     
-	 
-	 xMath PVR_size_val "PVR_size+0x8"
-	 PutVarChr MEMORY_FILE5 0 PVR_size_val Long
-	 
-	 append
-	 log MEMORY_FILE 0 20 -4
-	 log MEMORY_FILE 0 4 -5
-	 log MEMORY_FILE 0 4 -3
-	 log MEMORY_FILE 0 4 -2
-	 log MEMORY_FILE PVR_start PVR_size 1
-	 append
-	 
-	 get tsize asize -1
-	 String PVR_NAME P "%name%_tex_%A%.pvr"
-	 log PVR_NAME 0 tsize -1
-     
-     Math A += 1
-	 
-	 log MEMORY_FILE 0 0
-	 log MEMORY_FILE2 0 0
-	 log MEMORY_FILE3 0 0
-	 log MEMORY_FILE5 0 0
-	 
+        get pixel_type long
+        #print "pixel_type: %pixel_type|x%"
 
+        log MEMORY_FILE3 currentpos 0x4
+        math currentpos += 0x4
+        Xmath PVR_size "binsize-PVR_start"
+    endif
+
+    xMath PVR_size_val "PVR_size+0x8"
+    PutVarChr MEMORY_FILE5 0 PVR_size_val Long
+    append
+    log MEMORY_FILE 0 4 -4
+    log MEMORY_FILE 0 4 -5
+    log MEMORY_FILE 0 4 -3
+    log MEMORY_FILE 0 4 -2
+    log MEMORY_FILE PVR_start PVR_size 1
+    append
+
+    get tsize asize -1
+
+    if A < 10
+        String PVR_NAME P "TexID_00%A%.pvr"
+    elif A < 100 
+        String PVR_NAME P "TexID_0%A%.pvr"
+    else
+        String PVR_NAME P "TexID_%A%.pvr"
+    endif
+    log PVR_NAME 0 tsize -1
+
+    log MEMORY_FILE 0 0
+    log MEMORY_FILE2 0 0
+    log MEMORY_FILE3 0 0
+    log MEMORY_FILE5 0 0
+
+    if A >= B
+        break
+    endif
+
+    Math A += 1
 next loop
 
-
 # MODELS_LOOP
-
 
 Math B = 1
 get name basename
@@ -134,38 +127,34 @@ get models_pointers long
 goto models_pointers
 
 get base_address long
-
 math model_offset = models_pointers
 
+for loop2
+    xmath C "B-1"
+    if C < 10
+        String modelname P "%name%_00%C%.bin"
+    elif C < 100 
+        String modelname P "%name%_0%C%.bin"
+    else
+        String modelname P "%name%_%C%.bin"
+    endif
 
- for loop2
+    goto model_offset
+    get model_start long
+    xMath model_start "(model_start-base_address)+0x18"
 
-      String modelname P "%name%_model_%B%.bin"
-      goto model_offset
-      get model_start long
-      xMath model_start "(model_start-base_address)+0x18"
-      
-        if B < total_models
-	    
-          get next_offset long
-          Xmath model_end "(next_offset-base_address)+0x18"
-		  Xmath model_size "model_end-model_start"
-		  log modelname model_start model_size
-          
+    if B < total_models
+        get next_offset long
+        Xmath model_end "(next_offset-base_address)+0x18"
+        Xmath model_size "model_end-model_start"
+        log modelname model_start model_size
+    else
+        xmath model_end "models_pointers-0x8"
+        Xmath model_size "model_end-model_start"
+        log modelname model_start model_size
+        break
+    endif
 
-		else
-		  
-		  xmath model_end "models_pointers-0x8"
-		  Xmath model_size "model_end-model_start"
-		  log modelname model_start model_size
-		  
-		  break
-
-		  
-        endif
-		
-		
-	  Math B += 1
-	  Math model_offset += 0x4
-	  
- next loop2
+    Math B += 1
+    Math model_offset += 0x4
+next loop2
