@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------
 # Dead or Alive 2 (Dreamcast) .CHR Unpacker 
 #
-# *Script by VincentNL  28/08/2023
+# *Script by VincentNL  19/10/2023
 #
 #
 #----------------------------------------------------------------------
@@ -95,11 +95,11 @@ for loop
     get tsize asize -1
 
     if A < 10
-        String PVR_NAME P "TexID_00%A%.pvr"
+        String PVR_NAME P "%name%/Textures/TexID_00%A%.pvr"
     elif A < 100 
-        String PVR_NAME P "TexID_0%A%.pvr"
+        String PVR_NAME P "%name%/Textures/TexID_0%A%.pvr"
     else
-        String PVR_NAME P "TexID_%A%.pvr"
+        String PVR_NAME P "%name%/Textures/TexID_%A%.pvr"
     endif
     log PVR_NAME 0 tsize -1
 
@@ -132,11 +132,11 @@ math model_offset = models_pointers
 for loop2
     xmath C "B-1"
     if C < 10
-        String modelname P "%name%_00%C%.bin"
+        String modelname P "%name%/model_%name%_00%C%.bin"
     elif C < 100 
-        String modelname P "%name%_0%C%.bin"
+        String modelname P "%name%/model_%name%_0%C%.bin"
     else
-        String modelname P "%name%_%C%.bin"
+        String modelname P "%name%/model_%name%_%C%.bin"
     endif
 
     goto model_offset
