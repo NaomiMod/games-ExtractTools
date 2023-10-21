@@ -4,12 +4,6 @@ import struct
 import os
 from tkinter import Tk, filedialog
 
-root = Tk()
-root.withdraw()
-
-chr_files = filedialog.askopenfilenames(title="Select .chr Files", filetypes=(("CHR Files", "*.chr"), ("All Files", "*.*")))
-extraction_folder = filedialog.askdirectory(title="Select Extraction Folder")
-
 def read_uint32(file):
     return struct.unpack("<L", file.read(4))[0]
 
@@ -97,10 +91,18 @@ def models_loop():
 
             model_offset_ptr += 0x4
 
-for i, chr_file_path in enumerate(chr_files):
-    name = os.path.splitext(os.path.basename(chr_file_path))[0]  # Take base filename
-    chr_file = name + ".chr"
-    pvr_container = name + ".bin"
-    textures_loop()
-    models_loop()
-    
+root = Tk()
+root.withdraw()
+extraction_folder = ""
+
+chr_files = filedialog.askopenfilenames(title="Select .chr Files", filetypes=(("CHR Files", "*.chr"), ("All Files", "*.*")))
+if chr_files != "":extraction_folder = filedialog.askdirectory(title="Select Extraction Folder")
+
+if chr_files != "" or extraction_folder != "":
+    for i, chr_file_path in enumerate(chr_files):
+        name = os.path.splitext(os.path.basename(chr_file_path))[0]  # Take base filename
+        chr_file = chr_file_path
+        pvr_container = f"{chr_file_path[:-4]}.bin"
+        textures_loop()
+        models_loop()
+root.destroy()
