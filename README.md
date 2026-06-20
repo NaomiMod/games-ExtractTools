@@ -1,5 +1,5 @@
 # Naomi Model Extractor
-[nl_scan.py](https://github.com/NaomiMod/games-ExtractTools/nl_scan.py) is a Python script that scans game files for NaomiLib models and extracts them.
+[nl_scan.py](https://github.com/NaomiMod/games-ExtractTools/blob/main/nl_scan.py) is a Python script that scans game files for NaomiLib models and extracts them.
 
 Exported models can be opened in Blender with [Blender NaomiLib Importer Addon](https://github.com/NaomiMod/blender-NaomiLib)
 
