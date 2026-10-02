@@ -37,6 +37,8 @@ NL2_OBJTAG_SIZE  = 96
 NL2_ALL_SIZE_OFF = 0x18
 NL1_HDR_MIN      = 0x68
 NL1_MESH_OFF     = 0x64
+NL1_FIRST_MESH   = 0x18          # first submesh param block
+NL1_MESH_PARAM_SIZE = 0x50       # param block incl. trailing size field
 MIN_MESH_BYTES   = 0xD8          # importer floor
 MAX_MESH_BYTES   = 32 * 1024 * 1024
 
@@ -111,18 +113,36 @@ def try_nl1(buf, off):
     br = f32le(buf, off + 0x14)
     if br is None or not is_valid_radius(br):
         return False, 0
-    # derive total size from mesh_end_offset
-    mesh_end_rel = u32le(buf, off + NL1_MESH_OFF)
-    if mesh_end_rel is None:
-        return False, 0
-    all_size = mesh_end_rel + NL1_MESH_OFF + 0xC
+    # Walk the submesh chain exactly like NLimporter does.
+    # Each submesh: 0x4C-byte param block starting with the para word,
+    # whose last uint32 (at +0x48) is the submesh data size.
+    #   submesh_end = size_field_pos + 4 + size
+    # The next submesh starts there; a zero uint32 terminates the chain.
+    pos = off + NL1_FIRST_MESH
+    n_sub = 0
+    while True:
+        if pos + NL1_MESH_PARAM_SIZE > len(buf):
+            return False, 0
+        para = u32le(buf, pos)
+        if (para >> 29) & 7 not in (4, 5, 7):
+            return False, 0
+        sub_size = u32le(buf, pos + NL1_MESH_PARAM_SIZE - 4)
+        if sub_size & 3:
+            return False, 0
+        nxt = pos + NL1_MESH_PARAM_SIZE + sub_size
+        if nxt + 4 > len(buf) or nxt - off > MAX_MESH_BYTES:
+            return False, 0
+        n_sub += 1
+        pos = nxt
+        if u32le(buf, pos) == 0:       # terminator word
+            pos += 4
+            # objects are stored with one more 4-byte trailer word after the
+            # terminator (next object starts right after it)
+            if pos + 4 <= len(buf):
+                pos += 4
+            break
+    all_size = pos - off
     if all_size & 3 or not (MIN_MESH_BYTES <= all_size <= MAX_MESH_BYTES):
-        return False, 0
-    if off + all_size > len(buf) or all_size < 0x28:
-        return False, 0
-    # first mesh param: para_type bits[31:29] must be 4, 5, or 7
-    mp0 = u32le(buf, off + 0x18)
-    if mp0 is None or (mp0 >> 29) & 7 not in (4, 5, 7):
         return False, 0
     return True, all_size
 
